@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aegis - Sustainable City</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- External Libraries for Charts and Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- Link to external CSS -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid-glow"></div>
+
+<!-- Modals for Onboarding -->
+<div class="modal-overlay" id="surveyModal">
+  <div class="modal-box">
+    <h3 class="modal-title">Aegis Setup</h3>
+    <form id="surveyForm">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" id="uName" class="form-control" required placeholder="John Doe">
+      </div>
+      <div class="form-group">
+        <label>Age</label>
+        <input type="number" id="uAge" class="form-control" required placeholder="25">
+      </div>
+      <div class="form-group">
+        <label>City</label>
+        <div style="display: flex; gap: 10px;">
+          <input type="text" id="uCity" class="form-control" placeholder="Enter city manually" required>
+          <button type="button" class="btn-secondary" onclick="autoDetectCity()" style="width: auto; padding: 0 15px;">📍 Detect</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Primary Commute</label>
+        <select id="uCommute" class="form-control">
+          <option value="walk">Walking / Bicycle</option>
+          <option value="transit">Public Transit (Bus/Train)</option>
+          <option value="bike">Motorcycle / Scooter</option>
+          <option value="car">Personal Car</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Diet Type</label>
+        <select id="uDiet" class="form-control">
+          <option value="vegan">Vegan</option>
+          <option value="vegetarian">Vegetarian</option>
+          <option value="omnivore">Average Omnivore</option>
+          <option value="meat">Heavy Meat Eater</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Recycling Habits</label>
+        <select id="uRecycle" class="form-control">
+          <option value="good">Always sort and recycle</option>
+          <option value="avg">Sometimes recycle</option>
+          <option value="poor">Rarely recycle</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" onclick="closeModal('surveyModal')">Cancel</button>
+        <button type="submit" class="cta">Next Step</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="authModal">
+  <div class="modal-box">
+    <h3 class="modal-title">Secure your Profile</h3>
+    <div class="form-group">
+      <label>Phone Number (for OTP)</label>
+      <input type="text" id="uPhone" class="form-control" placeholder="+91 9999999999">
+    </div>
+    <div class="form-group">
+      <label>Enter OTP</label>
+      <input type="text" class="form-control" placeholder="1234">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="processLogin('guest')">Continue as Guest</button>
+      <button class="cta" onclick="processLogin('user')">Verify & Join</button>
+    </div>
+  </div>
+</div>
+
+<div class="chrome">
+  <div class="chrome-top">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="addr">aegis.app</div>
+    <div class="userbox">
+      <button class="theme-btn" onclick="toggleTheme()">☀️/🌙</button>
+      <span id="headerName">Guest</span>
+      <button class="logout-btn" id="logoutBtn" onclick="logout()">Logout</button>
+      <div class="avatar" id="headerAvatar">?</div>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button data-screen="hero" class="active">Home</button>
+    <button data-screen="dashboard">Carbon Score</button>
+    <button data-screen="map">Recycling Map</button>
+    <button data-screen="missions">Mission Board</button>
+    <button data-screen="profile">Profile</button>
+  </nav>
+</div>
+
+<main>
+  <!-- HERO -->
+  <section class="screen active hero" id="hero">
+    <div class="hero-scene" id="heroScene">
+      <div class="split-layer">
+        <div class="split-side side-toxic"><div class="smoke"></div></div>
+        <div class="split-side side-clean"><div class="particles-clean" id="particles"></div></div>
+      </div>
+      <div class="drag-rail" id="dragRail">
+        <div class="drag-line" id="dragLine"></div>
+        <div class="drag-handle" id="dragHandle">↔</div>
+      </div>
+      <div class="hero-content">
+        <h1>RESTORE YOUR <span class="accent">CITY.</span></h1>
+        <div class="mission-card">
+          <div class="tag">Aegis Protocol</div>
+          <button class="cta" onclick="openModal('surveyModal')">Join the Mission</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="screen" id="dashboard">
+    <div class="page-head">
+      <div class="eyebrow">Live readout</div>
+      <h2>Aegis Carbon Score</h2>
+      <p>Calculated based on your commute, diet, and lifestyle.</p>
+    </div>
+    <div class="dash-grid">
+      <div class="gauge-panel">
+        <div class="orbit-wrap">
+          <div class="orbit-ring ring-1"></div>
+          <div class="globe"></div>
+          <div class="score-center">
+            <div class="big" id="dashScoreVal">--</div>
+            <div class="small">Carbon Score</div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="panel">
+          <div class="panel-title">Your Breakdown</div>
+          <div id="scoreFeedback" style="color: var(--muted); font-size: 14px; line-height: 1.6;">
+            Complete the onboarding to see your dynamic breakdown here.
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Weekly Footprint Trend</div>
+          <canvas id="footprintChart" height="150"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section class="screen" id="map">
+    <div class="page-head">
+      <div class="eyebrow"><span id="mapCityEyebrow">Select City</span> · 5.0 km radius</div>
+      <h2>Recycling Map</h2>
+    </div>
+    <div class="map-layout">
+      <div>
+        <div class="filter-tabs" id="mapFilters">
+          <button class="on" data-f="all">All</button>
+          <button data-f="plastic">Plastics</button>
+          <button data-f="metal">Metal</button>
+        </div>
+      </div>
+      <div class="map-canvas" id="mapCanvas">
+        <div class="map-label" id="mapCityLabel">CITY UNKNOWN</div>
+        <div class="pin plastic" style="top:34%; left:52%;"><span>♻️</span></div>
+        <div class="pin metal" style="top:44%; left:31%;"><span>🔩</span></div>
+        <div class="pin plastic" style="top:70%; left:22%;"><span>♻️</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSIONS -->
+  <section class="screen" id="missions">
+    <div class="page-head">
+      <h2>Mission Board</h2>
+      <p>Track your goals and unlock real-world coupon codes.</p>
+    </div>
+    
+    <div class="mission-category-title">Daily Operations</div>
+    <div class="mission-grid">
+      <div class="quest" onclick="completeMission(this)"><div class="quest-icon">🚶</div><div class="quest-body"><h5>Walk 2km today</h5><div class="quest-progress"><i style="width:20%"></i></div><div class="pts">+10 pts</div></div><div class="quest-check"></div></div>
+      <div class="quest" onclick="completeMission(this)"><div class="quest-icon">🔌</div><div class="quest-body"><h5>Unplug idle devices</h5><div class="quest-progress"><i style="width:0%"></i></div><div class="pts">+5 pts</div></div><div class="quest-check"></div></div>
+    </div>
+
+    <div class="mission-category-title">Weekly & Monthly Goals</div>
+    <div class="mission-grid">
+      <div class="quest" onclick="completeMission(this)"><div class="quest-icon">🍽️</div><div class="quest-body"><h5>3 Meatless Days (Weekly)</h5><div class="quest-progress"><i style="width:66%"></i></div><div class="pts">+30 pts</div></div><div class="quest-check"></div></div>
+      <div class="quest" onclick="completeMission(this)"><div class="quest-icon">💡</div><div class="quest-body"><h5>Reduce bill by 10% (Monthly)</h5><div class="quest-progress"><i style="width:50%"></i></div><div class="pts">+100 pts</div></div><div class="quest-check"></div></div>
+    </div>
+
+    <div class="mission-category-title">Community Milestones & Rewards</div>
+    <div class="mission-grid">
+      <div class="quest done" style="border-color: var(--amber); background: rgba(245,178,92,0.1);" onclick="completeMission(this)">
+        <div class="quest-icon">🎟️</div>
+        <div class="quest-body">
+          <h5>Unlock 20% Metro Pass</h5>
+          <p style="font-size:11px; color:var(--muted)">Reward Triggered!</p>
+          <div class="pts">Code: AEGIS-20</div>
+        </div>
+        <div class="quest-check" style="background:var(--amber); color:#000;">✓</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFILE -->
+  <section class="screen" id="profile">
+    <div class="profile-grid">
+      <div class="profile-card">
+        <div class="eco-avatar">🌱</div>
+        <h3 id="profName" style="font-size: 22px; margin-bottom: 5px;">Guest</h3>
+        <p id="profRank" style="color: var(--green-soft); font-size: 14px; margin-bottom: 20px;">Rank: Unassigned</p>
+        <div class="profile-details">
+          <p><span>Age:</span> <b id="profAge">--</b></p>
+          <p><span>City:</span> <b id="profCity">--</b></p>
+          <p><span>Commute:</span> <b id="profCommute">--</b></p>
+          <p><span>Diet:</span> <b id="profDiet">--</b></p>
+        </div>
+        <button class="cta edit-btn" onclick="openModal('surveyModal')">Edit Profile</button>
+      </div>
+      <div class="panel">
+        <h3 style="margin-bottom: 20px;">Badge Locker</h3>
+        <div class="badge-layout">
+          <div class="badge unlocked"><span>🌞</span><span class="lab">Solar Core</span></div>
+          <div class="badge unlocked"><span>🚇</span><span class="lab">Transit Legend</span></div>
+          <div class="badge locked"><span>🌍</span><span class="lab">Eco Master</span></div>
+          <div class="badge locked"><span>🏆</span><span class="lab">Top 1%</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Link to external JS -->
+<script src="script.js"></script>
+</body>
+</html>
