@@ -350,3 +350,39 @@ body.light-mode .mission-card {
 .badge.unlocked{background:linear-gradient(160deg,rgba(61,220,132,.18),rgba(61,220,132,.04)); border-color:var(--green);}
 .badge.locked{opacity:.35;}
 .badge .lab{font-size:8.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; text-align:center; padding:0 4px;}
+
+/* ===== MOBILE RESPONSIVE FIXES ===== */
+@media (max-width: 640px) {
+  /* 1. Header Adjustments */
+  .addr { display: none; } /* Hides the 'aegis.app' url to save space */
+  .chrome-top { padding: 12px 16px; }
+  .userbox { gap: 8px; font-size: 12px; }
+  
+  /* 2. General Section Spacing */
+  section { padding: 32px 16px; }
+  .page-head h2 { font-size: 28px; }
+  
+  /* 3. Fix the Carbon Score Gauge Overflow */
+  .gauge-panel { padding: 20px 10px; }
+  .orbit-wrap { 
+    transform: scale(0.75); /* Shrinks the fixed-size circle to fit small screens */
+    margin: -30px 0; /* Removes the extra whitespace caused by scaling */
+  }
+  
+  /* 4. Modal and Form Fixes */
+  .modal-box { padding: 24px 16px; width: 95%; }
+  .form-control { font-size: 16px; } /* Strictly 16px prevents iOS devices from auto-zooming */
+  
+  /* 5. Grid Adjustments */
+  .mission-grid { grid-template-columns: 1fr; }
+  
+  /* 6. Hero Section Sizing */
+  .hero-content h1 { font-size: 38px; }
+  .mission-card { padding: 20px; min-width: 100%; }
+}
+
+@media (max-width: 380px) {
+  /* Fixes for very small screens (like iPhone SE) */
+  nav.tabs button { font-size: 12px; padding: 10px 12px; }
+  .score-row .num { font-size: 24px; }
+}
