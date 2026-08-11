@@ -580,6 +580,9 @@
     position:relative; z-index:2; width:100%; max-width:460px;
     background:var(--panel); border:1px solid var(--line); border-radius:18px;
     padding:34px 30px; box-shadow:0 30px 80px rgba(0,0,0,.6);
+    max-height: 85vh;
+    max-height: 85dvh;
+    overflow-y: auto;
   }
   .ob-step, .auth-step{display:none;}
   .ob-step.active, .auth-step.active{display:block; animation:fade .35s ease;}
@@ -1272,7 +1275,7 @@
           <div><span class="sw" style="background:var(--amber)"></span> 150–300 Poor</div>
           <div><span class="sw" style="background:#3a9a5c"></span> 50–150 Moderate</div>
           <div><span class="sw" style="background:var(--cyan)"></span> 0–50 Good</div>
-        </div>
+          </div>
       </div>
       <div>
         <div class="aqi-readout">
@@ -2637,7 +2640,7 @@ function renderHistoryChart() {
     }, 100);
   }
 
-  function moveCatcher(dir) {
+function moveCatcher(dir) {
     catcherPos += dir * 20;
     catcherPos = clamp(catcherPos, 0, 85);
     document.getElementById('catcher').style.left = catcherPos + '%';
