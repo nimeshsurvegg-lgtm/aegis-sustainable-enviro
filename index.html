@@ -60,6 +60,9 @@
       <!-- Municipal Admin Demo -->
       <button class="icon-btn" onclick="openAdminModal()" title="Municipal Admin Prototype" aria-label="Admin Demo">🛡️</button>
 
+      <!-- Mobile Menu Toggle Button (Mobile Only) -->
+      <button class="icon-btn mobile-menu-btn" onclick="toggleMobileDrawer()" title="Explore All Modules" aria-label="Navigation Menu"><span>☰</span></button>
+
       <!-- Citizen Profile / Auth State -->
       <div id="userAuthBadge">
         <!-- Injected via renderAuthState() -->
@@ -67,7 +70,7 @@
     </div>
   </div>
 
-  <!-- Primary Spatial Screen Tabs -->
+  <!-- Primary Spatial Screen Tabs (Desktop Viewport Only) -->
   <nav class="tabs" id="tabs" role="tablist">
     <button data-screen="hero" class="active" role="tab" aria-selected="true"><span>🌍</span> Home</button>
     <button data-screen="city" role="tab"><span>🏙️</span> 3D Living City</button>
@@ -86,27 +89,185 @@
   </nav>
 </header>
 
-<!-- Mobile Navigation Bar -->
-<div class="mobile-nav-bar" id="mobileNav">
-  <button class="mobile-nav-btn active" data-screen="hero" onclick="goTo('hero')">
+<!-- Mobile Primary Bottom Navigation Bar -->
+<nav class="mobile-nav-bar" id="mobileNav" aria-label="Mobile Navigation">
+  <button class="mobile-nav-btn active" data-screen="hero" onclick="goTo('hero')" aria-label="Home">
     <span class="icon">🌍</span><span>Home</span>
   </button>
-  <button class="mobile-nav-btn" data-screen="city" onclick="goTo('city')">
+  <button class="mobile-nav-btn" data-screen="city" onclick="goTo('city')" aria-label="3D City">
     <span class="icon">🏙️</span><span>City 3D</span>
   </button>
-  <button class="mobile-nav-btn" data-screen="dashboard" onclick="goTo('dashboard')">
+  <button class="mobile-nav-btn" data-screen="dashboard" onclick="goTo('dashboard')" aria-label="Carbon Score">
     <span class="icon">📊</span><span>Score</span>
   </button>
-  <button class="mobile-nav-btn" data-screen="ecoscan" onclick="goTo('ecoscan')">
-    <span class="icon">📷</span><span>Scan</span>
+  <button class="mobile-nav-btn" data-screen="missions" onclick="goTo('missions')" aria-label="Missions">
+    <span class="icon">🎯</span><span>Missions</span>
   </button>
-  <button class="mobile-nav-btn" data-screen="map" onclick="goTo('map')">
-    <span class="icon">🗺️</span><span>Map</span>
+  <button class="mobile-nav-btn" id="mobileNavExploreBtn" onclick="toggleMobileDrawer()" aria-label="Explore Menu">
+    <span class="icon">🧭</span><span>Explore</span>
   </button>
-  <button class="mobile-nav-btn" data-screen="profile" onclick="goTo('profile')">
-    <span class="icon">🧑‍🚀</span><span>Profile</span>
-  </button>
-</div>
+</nav>
+
+<!-- Mobile Navigation Slide-Over Drawer -->
+<div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" onclick="closeMobileDrawer()"></div>
+<aside class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Explore Aegis Modules">
+  <div class="mobile-drawer-head">
+    <div class="brand-badge" onclick="goTo('hero'); closeMobileDrawer();">
+      <div class="logo-orb">🧭</div>
+      <div class="brand-text">
+        <span class="brand-name">Explore Aegis</span>
+        <span class="brand-tag">Sustainability Modules</span>
+      </div>
+    </div>
+    <button class="icon-btn" onclick="closeMobileDrawer()" aria-label="Close Menu">✕</button>
+  </div>
+  
+  <div class="mobile-drawer-body">
+    <div class="drawer-section-label">Core Environmental Intelligence</div>
+    <div class="drawer-grid">
+      <button class="drawer-item" onclick="goTo('hero'); closeMobileDrawer();">
+        <span class="drawer-icon">🌍</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Platform Overview</div>
+          <div class="drawer-desc">Planetary mission &amp; live impact statistics</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="goTo('city'); closeMobileDrawer();">
+        <span class="drawer-icon">🏙️</span>
+        <div class="drawer-info">
+          <div class="drawer-title">3D Living Virtual Twin</div>
+          <div class="drawer-desc">Interactive district telemetry &amp; clean mobility</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="goTo('globe'); closeMobileDrawer();">
+        <span class="drawer-icon">🌐</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Earth Pulse 3D Globe</div>
+          <div class="drawer-desc">Global atmospheric observatory &amp; AQI hubs</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="goTo('dashboard'); closeMobileDrawer();">
+        <span class="drawer-icon">📊</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Bharat Carbon Score</div>
+          <div class="drawer-desc">Personal breakdown &amp; historical trendlines</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="goTo('aqi'); closeMobileDrawer();">
+        <span class="drawer-icon">🏭</span>
+        <div class="drawer-info">
+          <div class="drawer-title">AQI Atmospheric Station</div>
+          <div class="drawer-desc">6-pollutant telemetry &amp; severity tower</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+    </div>
+
+    <div class="drawer-section-label">Citizen Action &amp; Discovery</div>
+    <div class="drawer-grid">
+      <button class="drawer-item" onclick="goTo('ecoscan'); closeMobileDrawer();">
+        <span class="drawer-icon">📷</span>
+        <div class="drawer-info">
+          <div class="drawer-title">EcoScan AI Vision</div>
+          <div class="drawer-desc">Material polymer &amp; SWM stream detector</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="goTo('activities'); closeMobileDrawer();">
+        <span class="drawer-icon">⚡</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Daily Activity Tracker</div>
+          <div class="drawer-desc">Log eco-actions &amp; earn green points</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="goTo('map'); closeMobileDrawer();">
+        <span class="drawer-icon">🗺️</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Recycling Map</div>
+          <div class="drawer-desc">Kabadiwalas, e-waste drop &amp; kiosks</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="goTo('missions'); closeMobileDrawer();">
+        <span class="drawer-icon">🎯</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Missions &amp; Directives</div>
+          <div class="drawer-desc">Daily quests aligned with Mission LiFE</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="goTo('passport'); closeMobileDrawer();">
+        <span class="drawer-icon">🛂</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Digital Green Passport</div>
+          <div class="drawer-desc">Verified citizen visa stamps &amp; eco-credentials</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+    </div>
+
+    <div class="drawer-section-label">Education &amp; Community</div>
+    <div class="drawer-grid">
+      <button class="drawer-item" onclick="goTo('games'); closeMobileDrawer();">
+        <span class="drawer-icon">🎮</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Eco Game Zone</div>
+          <div class="drawer-desc">Interactive waste sorting &amp; carbon trivia</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="goTo('feed'); closeMobileDrawer();">
+        <span class="drawer-icon">🧠</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Daily Gyan Feed</div>
+          <div class="drawer-desc">Curated practical sustainability wisdom</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="goTo('community'); closeMobileDrawer();">
+        <span class="drawer-icon">🤝</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Citizen Community Hub</div>
+          <div class="drawer-desc">Neighborhood drives &amp; forum discussions</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="closeMobileDrawer(); toggleAlertsDrawer();">
+        <span class="drawer-icon">🔔</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Environmental Alerts</div>
+          <div class="drawer-desc">Live threshold triggers &amp; regional advisories</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+    </div>
+
+    <div class="drawer-section-label">Account &amp; Administration</div>
+    <div class="drawer-grid">
+      <button class="drawer-item" onclick="goTo('profile'); closeMobileDrawer();">
+        <span class="drawer-icon">🧑‍🚀</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Citizen Profile</div>
+          <div class="drawer-desc">Ranks, avatar picker &amp; streak progress</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+      <button class="drawer-item" onclick="closeMobileDrawer(); openAdminModal();">
+        <span class="drawer-icon">🛡️</span>
+        <div class="drawer-info">
+          <div class="drawer-title">Municipal Admin Demo</div>
+          <div class="drawer-desc">City telemetry, user logs &amp; verification queue</div>
+        </div>
+        <span class="drawer-arrow">→</span>
+      </button>
+    </div>
+  </div>
+</aside>
 
 <!-- ===================================================================
      ENVIRONMENTAL ALERTS SLIDE-OVER DRAWER

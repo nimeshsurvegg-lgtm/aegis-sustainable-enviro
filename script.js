@@ -135,6 +135,28 @@ function showToast(msg, isAlert = false) {
 /* ===================================================================
    3. NAVIGATION & SPATIAL SCREEN ROUTER
 =================================================================== */
+function toggleMobileDrawer() {
+  const drawer = document.getElementById('mobileDrawer');
+  const backdrop = document.getElementById('mobileDrawerBackdrop');
+  if (!drawer) return;
+  const isOpen = drawer.classList.contains('open');
+  if (isOpen) {
+    closeMobileDrawer();
+  } else {
+    drawer.classList.add('open');
+    if (backdrop) backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeMobileDrawer() {
+  const drawer = document.getElementById('mobileDrawer');
+  const backdrop = document.getElementById('mobileDrawerBackdrop');
+  if (drawer) drawer.classList.remove('open');
+  if (backdrop) backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 function goTo(screenId) {
   const target = document.getElementById(screenId);
   if (!target) return;
@@ -149,9 +171,18 @@ function goTo(screenId) {
   });
 
   // Update mobile bottom bar
+  const primaryScreens = ['hero', 'city', 'dashboard', 'missions'];
+  const isPrimary = primaryScreens.includes(screenId);
   document.querySelectorAll('.mobile-nav-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.screen === screenId);
+    if (b.id === 'mobileNavExploreBtn') {
+      b.classList.toggle('active', !isPrimary);
+    } else {
+      b.classList.toggle('active', b.dataset.screen === screenId);
+    }
   });
+
+  // Close mobile drawer if open
+  closeMobileDrawer();
 
   // Switch visible screen
   document.querySelectorAll('.screen').forEach(s => {

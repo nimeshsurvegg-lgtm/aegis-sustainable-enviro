@@ -432,53 +432,248 @@ nav.tabs button.active .tab-badge {
   color: var(--green-soft);
 }
 
-/* Mobile Quick Navigation */
+/* ===================================================================
+   MOBILE NAVIGATION & SLIDE-OVER EXPLORE DRAWER
+=================================================================== */
 .mobile-nav-bar {
   display: none;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 100;
-  background: rgba(10, 16, 13, 0.94);
-  backdrop-filter: blur(16px);
+  z-index: 120;
+  background: var(--bg-hud);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid var(--line);
-  padding: 6px 12px 10px;
+  padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
   justify-content: space-around;
-}
-
-html[data-theme="light"] .mobile-nav-bar {
-  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.45);
 }
 
 .mobile-nav-btn {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  justify-content: center;
+  gap: 3px;
   background: none;
   border: none;
   color: var(--text-muted);
-  font-size: 10px;
+  font-family: var(--font-body);
+  font-size: 10.5px;
   font-weight: 600;
   cursor: pointer;
-  padding: 4px 6px;
-  border-radius: var(--radius-sm);
-  transition: color var(--trans-fast);
+  padding: 6px 2px;
+  border-radius: var(--radius-xs);
+  min-height: 48px;
+  min-width: 44px;
+  transition: all var(--trans-fast);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-nav-btn .icon {
-  font-size: 18px;
+  font-size: 19px;
+  line-height: 1;
+  transition: transform var(--trans-fast);
+}
+
+.mobile-nav-btn:active {
+  transform: scale(0.92);
 }
 
 .mobile-nav-btn.active {
   color: var(--green-soft);
+  font-weight: 700;
+}
+
+.mobile-nav-btn.active .icon {
+  transform: translateY(-2px);
+}
+
+html[data-theme="light"] .mobile-nav-bar {
+  background: rgba(255, 255, 255, 0.96);
+  border-top-color: rgba(24, 60, 42, 0.12);
+  box-shadow: 0 -2px 16px rgba(12, 31, 21, 0.08);
+}
+
+html[data-theme="light"] .mobile-nav-btn {
+  color: #4e6e5d;
+}
+
+html[data-theme="light"] .mobile-nav-btn.active {
+  color: #059669;
+}
+
+/* Mobile Explore Drawer & Backdrop */
+.mobile-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--trans-base);
+}
+
+.mobile-drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: min(88vw, 380px);
+  z-index: 140;
+  background: var(--bg-hud);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1px solid var(--line);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-drawer.open {
+  transform: translateX(0);
+}
+
+.mobile-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.mobile-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 14px calc(24px + env(safe-area-inset-bottom, 16px));
+}
+
+.drawer-section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin: 18px 8px 8px;
+}
+
+.drawer-section-label:first-child {
+  margin-top: 4px;
+}
+
+.drawer-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.drawer-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  text-align: left;
+  cursor: pointer;
+  min-height: 52px;
+  transition: all var(--trans-fast);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.drawer-item:hover, .drawer-item:active {
+  border-color: var(--green);
+  background: var(--bg-surface-hover);
+  transform: translateX(-2px);
+}
+
+.drawer-item .drawer-icon {
+  font-size: 20px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.drawer-item .drawer-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.drawer-item .drawer-title {
+  font-family: var(--font-heading);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.drawer-item .drawer-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.drawer-item .drawer-arrow {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+html[data-theme="light"] .mobile-drawer {
+  background: rgba(255, 255, 255, 0.98);
+  border-left-color: rgba(24, 60, 42, 0.14);
+  box-shadow: -10px 0 30px rgba(12, 31, 21, 0.15);
+}
+
+html[data-theme="light"] .drawer-item {
+  background: #ffffff;
+  border-color: rgba(24, 60, 42, 0.12);
+  color: #0c1f15;
+}
+
+html[data-theme="light"] .drawer-item:hover {
+  background: #edf4f0;
+  border-color: #059669;
+}
+
+/* Visibility Rules: Strict Desktop (>900px) vs Mobile (<=900px) */
+@media (min-width: 901px) {
+  .mobile-nav-bar { display: none !important; }
+  .mobile-menu-btn { display: none !important; }
+  .mobile-drawer, .mobile-drawer-backdrop { display: none !important; }
+  nav.tabs { display: flex !important; }
+  body { padding-bottom: 0 !important; }
 }
 
 @media (max-width: 900px) {
-  .addr-bar { display: none; }
-  .mobile-nav-bar { display: flex; }
-  body { padding-bottom: 64px; }
+  nav.tabs { display: none !important; }
+  .addr-bar { display: none !important; }
+  .mobile-nav-bar { display: flex !important; }
+  .mobile-menu-btn { display: inline-flex !important; }
+  body { padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)) !important; }
 }
 
 /* Main Container & Screens */
@@ -2847,4 +3042,770 @@ html[data-theme="light"] .facility-card {
 html[data-theme="light"] .facility-card:hover {
   border-color: #059669;
   box-shadow: 0 4px 14px rgba(5, 150, 105, 0.12);
+}
+
+/* ===================================================================
+   AEGIS V3 — COMPLETE MOBILE RESPONSIVE SYSTEM
+   Strict Desktop Preservation (>900px) • Fluid Mobile Breakpoints (<=900px, <=600px, <=360px)
+=================================================================== */
+
+@media (max-width: 900px) {
+  /* Global Layout & Padding */
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    position: relative;
+  }
+
+  section {
+    padding: 24px 16px 48px;
+    max-width: 100%;
+  }
+
+  .page-head {
+    margin-bottom: 20px;
+  }
+
+  .page-head h2 {
+    font-size: clamp(22px, 5.8vw, 30px);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .page-head p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .eyebrow {
+    font-size: 10.5px;
+    margin-bottom: 6px;
+  }
+
+  .flex-between {
+    gap: 12px;
+  }
+
+  /* Compact Header on Mobile */
+  .chrome-top {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .brand-badge .brand-tag {
+    display: none;
+  }
+
+  .brand-badge .brand-name {
+    font-size: 15px;
+  }
+
+  .brand-badge .logo-orb {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .userbox {
+    gap: 6px;
+  }
+
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    font-size: 15px;
+  }
+
+  .user-profile-btn {
+    padding: 4px 8px 4px 4px;
+    font-size: 12px;
+  }
+
+  /* 01. Homepage Hero & 2x2 Statistics Grid */
+  .hero-viewport {
+    min-height: auto;
+    padding: 36px 14px 40px;
+    overflow: hidden;
+  }
+
+  .hero-headline-wrap {
+    padding: 0;
+    gap: 14px;
+    max-width: 100%;
+  }
+
+  .hero-tagline {
+    font-size: 11px;
+    padding: 4px 12px;
+  }
+
+  .hero-headline {
+    font-size: clamp(24px, 6.8vw, 36px);
+    line-height: 1.18;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+  }
+
+  .hero-subtext {
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .hero-cta-group {
+    width: 100%;
+    max-width: 320px;
+    flex-direction: column;
+    gap: 10px;
+    margin: 14px auto 0;
+  }
+
+  .hero-cta-group .cta {
+    width: 100%;
+    height: 46px;
+    font-size: 14px;
+  }
+
+  #heroPlanetCanvas {
+    opacity: 0.65;
+    touch-action: pan-y;
+  }
+
+  /* Statistics: Always 2x2 Grid on Mobile Devices */
+  .hero-stats-container {
+    padding: 0 14px;
+    margin-top: 10px;
+  }
+
+  .stat-strip {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+    margin: 16px 0 24px;
+  }
+
+  .stat-card {
+    padding: 14px 10px;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .stat-card .stat-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .stat-card .n {
+    font-size: clamp(16px, 4.2vw, 20px);
+    line-height: 1.2;
+  }
+
+  .stat-card .l {
+    font-size: 10px;
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+
+  .hero-features-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 0 14px;
+    margin-bottom: 24px;
+  }
+
+  .hero-feature-card {
+    padding: 18px 14px;
+    gap: 14px;
+  }
+
+  /* 02. 3D Living City Mobile Optimization */
+  .city-screen-wrap {
+    height: calc(100vh - 180px);
+    min-height: 400px;
+    border-radius: var(--radius-md);
+  }
+
+  #city3dCanvas {
+    touch-action: pan-y;
+  }
+
+  .city-hud-top {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .city-district-badge {
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+  }
+
+  .city-district-badge h4 {
+    font-size: 13.5px;
+  }
+
+  .city-district-badge p {
+    font-size: 11px;
+  }
+
+  .city-layer-controls {
+    width: 100%;
+    overflow-x: auto;
+    padding: 4px;
+    gap: 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .city-layer-controls::-webkit-scrollbar {
+    display: none;
+  }
+
+  .city-layer-btn {
+    padding: 6px 12px;
+    font-size: 11.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-height: 32px;
+  }
+
+  .city-hud-controls {
+    bottom: 12px;
+    right: 10px;
+    gap: 6px;
+  }
+
+  .city-hud-controls .icon-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+    border-radius: var(--radius-sm);
+  }
+
+  .city-district-drawer {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
+    max-width: none;
+    padding: 16px 14px;
+    max-height: 52vh;
+    overflow-y: auto;
+  }
+
+  /* 03. Earth Pulse 3D Globe Mobile Optimization */
+  .globe-screen-wrap {
+    height: calc(100vh - 180px);
+    min-height: 400px;
+    border-radius: var(--radius-md);
+  }
+
+  #earthGlobeCanvas {
+    touch-action: pan-y;
+  }
+
+  .globe-city-chips {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    gap: 6px;
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .globe-city-chips .chip {
+    padding: 6px 12px;
+    font-size: 11.5px;
+    min-height: 32px;
+  }
+
+  .globe-hud-overlay {
+    display: none;
+  }
+
+  .globe-hud-controls {
+    top: 56px;
+    right: 10px;
+    bottom: auto;
+    gap: 6px;
+  }
+
+  .globe-hud-controls .icon-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+  }
+
+  .globe-city-card {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
+    max-width: none;
+    padding: 16px 14px;
+    max-height: 48vh;
+    overflow-y: auto;
+  }
+
+  .globe-city-card h4 {
+    font-size: 15px;
+  }
+
+  .city-metric-row {
+    font-size: 12px;
+    padding: 5px 0;
+  }
+
+  /* 04. Dashboard & Carbon Score */
+  .dash-hero-grid, .dash-main-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .assistant-card {
+    padding: 16px 14px;
+  }
+
+  .gauge-panel {
+    padding: 20px 14px;
+  }
+
+  .orbit-wrap {
+    width: 240px;
+    height: 240px;
+    margin: 0 auto;
+  }
+
+  .orbit-wrap .globe {
+    width: 120px;
+    height: 120px;
+  }
+
+  .score-center .big {
+    font-size: 38px;
+  }
+
+  .score-center .small {
+    font-size: 11px;
+  }
+
+  .legend-list {
+    gap: 8px;
+    width: 100%;
+  }
+
+  .legend-row {
+    font-size: 12px;
+  }
+
+  .chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .chart-header .pill-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .chart-header .pill-btn {
+    flex: 1;
+    text-align: center;
+    padding: 6px 4px;
+    font-size: 11.5px;
+  }
+
+  .svg-chart-container {
+    height: 190px;
+  }
+
+  /* 05. EcoScan AI Vision */
+  .ecoscan-container {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .scan-viewport {
+    height: 250px;
+    min-height: 220px;
+    padding: 16px;
+    border-radius: var(--radius-md);
+  }
+
+  #scanPromptWrap h4 {
+    font-size: 15px;
+  }
+
+  #scanPromptWrap p {
+    font-size: 11.5px;
+    max-width: 280px;
+  }
+
+  .stream-badge-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* 06. Daily Activity Tracker */
+  .filter-pills#activityCategoryTabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-pills#activityCategoryTabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-pills#activityCategoryTabs button {
+    white-space: nowrap;
+    padding: 8px 14px;
+    font-size: 12px;
+    min-height: 40px;
+  }
+
+  .chip-row#activityPresetsRow {
+    gap: 6px;
+  }
+
+  .chip-row#activityPresetsRow button {
+    padding: 7px 12px;
+    font-size: 12px;
+    min-height: 38px;
+  }
+
+  #activityHistoryFilter {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #activityHistoryFilter button {
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 11.5px;
+  }
+
+  /* 07. Recycling Discovery Map: Mobile Layout */
+  .map-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .map-container-wrap {
+    order: -1;
+    height: 320px;
+    min-height: 300px;
+    width: 100%;
+    border-radius: var(--radius-md);
+  }
+
+  #leafletMap {
+    height: 100%;
+    min-height: 300px;
+    width: 100%;
+  }
+
+  .map-controls-panel {
+    width: 100%;
+  }
+
+  .map-search-row {
+    gap: 8px;
+    width: 100%;
+  }
+
+  .map-search-row input {
+    font-size: 13.5px;
+    padding: 10px 12px;
+    min-height: 42px;
+  }
+
+  .map-search-row .cta {
+    min-height: 42px;
+    padding: 0 16px;
+  }
+
+  #mapRadiusPills {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  #mapRadiusPills .pill-btn {
+    flex: 1;
+    text-align: center;
+    padding: 6px 2px;
+    font-size: 11px;
+  }
+
+  #mapFilters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #mapFilters::-webkit-scrollbar {
+    display: none;
+  }
+
+  #mapFilters button {
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 11.5px;
+    min-height: 36px;
+  }
+
+  .map-facility-list {
+    max-height: 340px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 08. AQI Atmospheric Station */
+  .aqi-layout {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .aqi-gauge-card {
+    padding: 20px 14px;
+  }
+
+  .aqi-meter-circle {
+    width: 170px;
+    height: 170px;
+    margin: 0 auto 16px;
+  }
+
+  .aqi-val {
+    font-size: 38px;
+  }
+
+  .aqi-cat {
+    font-size: 13px;
+  }
+
+  .pollutants-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px;
+  }
+
+  .pollutant-box {
+    padding: 10px 8px;
+  }
+
+  .pollutant-box .p-name {
+    font-size: 10.5px;
+  }
+
+  .pollutant-box .p-val {
+    font-size: 16px;
+  }
+
+  #cityBenchmarkRow {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px;
+  }
+
+  /* 09. Missions & Directives Board */
+  #periodTabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #periodTabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  #periodTabs button {
+    white-space: nowrap;
+    padding: 8px 14px;
+    font-size: 12px;
+    min-height: 40px;
+  }
+
+  .mission-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+
+  .quest {
+    padding: 14px 12px;
+    gap: 10px;
+  }
+
+  .quest-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
+  }
+
+  .quest h5 {
+    font-size: 14px;
+  }
+
+  .quest-check {
+    width: 28px;
+    height: 28px;
+    font-size: 15px;
+  }
+
+  .milestone-strip {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  /* 10. Green Passport */
+  .passport-book {
+    padding: 20px 14px;
+    max-width: 100%;
+    border-radius: var(--radius-md);
+  }
+
+  .passport-stamps-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px;
+  }
+
+  .visa-stamp {
+    padding: 12px 8px;
+  }
+
+  .visa-stamp .stamp-title {
+    font-size: 11px;
+  }
+
+  /* 11. Games, Community & Profile */
+  .game-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .game-card {
+    padding: 18px 14px;
+  }
+
+  .game-stage-box {
+    height: 150px;
+  }
+
+  .gyan-grid, .feed-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .gyan-card, .post-card {
+    padding: 18px 14px;
+  }
+
+  .badge-layout {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .avatar-figure {
+    width: 84px;
+    height: 84px;
+    font-size: 42px;
+  }
+
+  .avatar-picker {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px;
+  }
+
+  .avatar-opt {
+    min-height: 48px;
+    font-size: 22px;
+  }
+
+  /* 12. Modals & Dialogs */
+  .modal-card, .auth-card, .onboarding-card {
+    width: calc(100% - 20px) !important;
+    max-width: 480px !important;
+    max-height: calc(100vh - 40px) !important;
+    padding: 18px 14px !important;
+    margin: 10px auto;
+    overflow-y: auto;
+  }
+
+  .admin-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+  }
+
+  .admin-table-wrap {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-table {
+    min-width: 480px;
+  }
+
+  .alerts-drawer {
+    width: min(92vw, 380px) !important;
+  }
+}
+
+/* ===================================================================
+   ULTRA-NARROW PHONES SAFEGUARD (<= 360px & <= 320px)
+=================================================================== */
+@media (max-width: 360px) {
+  section {
+    padding: 16px 10px 36px;
+  }
+
+  .chrome-top {
+    padding: 8px 10px;
+  }
+
+  .brand-badge .brand-name {
+    font-size: 14px;
+  }
+
+  .stat-strip {
+    grid-template-columns: 1fr !important;
+  }
+
+  .pollutants-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #cityBenchmarkRow {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .passport-stamps-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .avatar-picker {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .mobile-nav-btn span {
+    font-size: 9.5px;
+  }
+
+  .mobile-nav-btn .icon {
+    font-size: 17px;
+  }
 }
