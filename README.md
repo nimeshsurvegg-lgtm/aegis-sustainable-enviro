@@ -1,175 +1,277 @@
 # 🌍 Aegis 3.0 — Autonomous Environmental Intelligence & Living Climate Ecosystem
 
-[![Platform](https://img.shields.io/badge/Platform-Web-brightgreen.svg)](#)
-[![Version](https://img.shields.io/badge/Version-3.0.0--Living_Ecosystem-emerald.svg)](#)
-[![WebGL](https://img.shields.io/badge/3D_Engine-Three.js_r128-059669.svg)](#)
-[![Geospatial](https://img.shields.io/badge/Map_Engine-Leaflet_1.9.4_+_CartoDB-blue.svg)](#)
-[![Mission LiFE](https://img.shields.io/badge/Aligned-Mission_LiFE-059669.svg)](#)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](#)
+<div align="center">
 
-> *"THE FUTURE IS NOT OBSERVED. IT IS BUILT."*
+[![Platform](https://img.shields.io/badge/Platform-Web-brightgreen.svg?style=flat-square)](#)
+[![Version](https://img.shields.io/badge/Version-3.0.0--Living__Ecosystem-emerald.svg?style=flat-square)](#)
+[![WebGL](https://img.shields.io/badge/3D__Engine-Three.js__r128-059669.svg?style=flat-square)](#)
+[![Geospatial](https://img.shields.io/badge/Map__Engine-Leaflet__1.9.4__+__Esri__Canvas-blue.svg?style=flat-square)](#)
+[![Client State](https://img.shields.io/badge/State__Store-AegisDB__2.0-yellow.svg?style=flat-square)](#)
+[![Mission LiFE](https://img.shields.io/badge/Aligned-Mission__LiFE-059669.svg?style=flat-square)](#)
+[![SBM Urban](https://img.shields.io/badge/Initiative-Swachh__Bharat__Urban__2.0-orange.svg?style=flat-square)](#)
+[![Responsive](https://img.shields.io/badge/Responsive-Mobile__First__&__Desktop-teal.svg?style=flat-square)](#)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](#)
 
-**Aegis 3.0** is an enterprise-grade citizen environmental sustainability platform and digital twin living ecosystem. Built in direct alignment with India's **Mission LiFE** (Lifestyle for Environment) and the **Swachh Bharat Mission (Urban 2.0)**, Aegis transforms individual daily choices into measurable, community-wide ecological restoration.
+<br>
 
-Combining **Three.js WebGL spatial computing**, **computer vision waste identification**, **geospatial circular facility discovery**, **Bharat Carbon Score modeling**, and a **gamified citizen passport**, Aegis represents a modern climate-tech product ready for municipal stakeholders, climate hackathons, developers, and conscious citizens.
+**"THE FUTURE IS NOT OBSERVED. IT IS BUILT."**
 
----
+*An enterprise-grade citizen environmental intelligence platform and interactive 3D digital twin living ecosystem.*
+*Transforms daily sustainable choices into measurable, verified municipal ecological restoration.*
 
-## 🌟 Signature Aegis 3.0 Capabilities
+[Key Capabilities](#-signature-capabilities) • [Architecture](#-architecture--technology-stack) • [Module Guide](#-platform-modules--functional-deep-dive) • [Local Setup](#-quick-start--local-setup) • [Regulatory Alignment](#-regulatory-alignment--policy-standards)
 
-### 1. 🏙️ 3D Living City (Interactive Procedural Digital Twin)
-* **Procedural Architectural Districts:** Visualizes 5 specialized urban sectors in full 3D:
-  * **Commercial Eco-Core:** High-rise glass towers fitted with rooftop monocrystalline photovoltaic solar arrays.
-  * **Residential Green-Belt:** Mid-rise modular housing featuring living sedum green roofs and community gardens.
-  * **Clean-Tech Industry:** Zero-effluent manufacturing facilities with smart industrial scrubbers.
-  * **Circular Logistics Depot:** Automated material recovery facilities with cylindrical polymer sorting silos.
-  * **Bio-Corridor Parkland:** Micro-forests with procedural low-poly acacia/oak canopies, lakes, and shaded pedestrian arteries.
-* **Autonomous Micro-Simulations:**
-  * **Rapid Transit Monorail:** High-speed electric hover train gliding continuously along an elevated urban rail circuit.
-  * **Kinetic Wind Turbines:** Multi-blade wind generators with real-time rotor aerodynamics.
-  * **Day / Night Lighting Modes:** Dynamic solar sun vectoring, twilight atmospheric fog, and night illumination window lights.
-* **District Inspection HUD:** Raycasting selection allowing citizens to click any urban zone to inspect live AQI compliance, solar kWh generation, tree canopy density, and waste diversion percentages, with a "Boost District" gamification action.
-* **Visual Layer Filters:** Toggle trees, solar infrastructure, roads, and monorail networks in real-time.
+</div>
 
 ---
 
-### 2. 🌐 Earth Pulse (Global 3D Planetary Observatory)
-* **Planetary Atmosphere & Continents:** High-fidelity 3D Earth sphere with continents, rotational axis tilt, and an illuminated atmospheric glow ring.
-* **Global Hotspot Pins:** Interactive spatial coordinate markers positioned at major planetary metropolitan centers:
-  * **Mumbai, India** (Coastal Megacity) — 112 AQI, 18.2% Forest Cover
-  * **Delhi NCR, India** (Inland Megacity) — 285 AQI, 11.4% Forest Cover
-  * **Bengaluru, India** (Garden City) — 78 AQI, 22.8% Forest Cover
-  * **Tokyo, Japan** (Ultra-Transit Hub) — 42 AQI, 31.5% Forest Cover
-  * **London, UK** (Low Emission Zone) — 38 AQI, 21.0% Forest Cover
-  * **São Paulo, Brazil** (Green Corridor Metro) — 89 AQI, 24.5% Forest Cover
-  * **Sydney, Australia** (Clean Marine Port) — 28 AQI, 34.0% Forest Cover
-* **Sensor Recalibration:** Raycasting pin inspection allows citizens to set their active local weather station directly from the 3D globe.
+## 📖 Executive Summary
+
+**Aegis 3.0** is an environmental sustainability intelligence ecosystem engineered in direct alignment with India's **Mission LiFE** (*Lifestyle for Environment*) and the **Swachh Bharat Mission (Urban 2.0)**. 
+
+Rather than functioning as a passive reporting dashboard, Aegis bridges spatial computing, computer vision, gamification, and citizen emissions ledgers into a unified civic engagement platform. The application combines:
+- **Interactive Spatial Computing:** High-performance WebGL 3D procedural digital twin (*3D Living City*) and planetary climate observatory (*Earth Pulse*).
+- **Verifiable Citizen Identity:** Diplomatic-grade **Digital Green Passport** with official biometric credentials, tier progression tracking, authenticated commemorative visa stamps, and high-fidelity printable PDF export.
+- **Accreditation & Honor Roll:** Municipal honor roll awarding official, cryptographic **Sustainability Certificates** exclusively to long-term sustained contributors.
+- **Geospatial Circular Logistics:** High-speed, watermark-free **Recycling Discovery Map** featuring dynamic radar sweeps, neon stream-coded facility pins, real-time telemetry HUD, and GPS routing.
+- **Action Logging Engine:** Granular **Daily Activity Tracker** recording real-world habits across transport, energy, waste, water, and food with instant $\text{CO}_2\text{e}$ offset credits.
+- **Interactive Eco-Learning:** 4-in-1 **Sustainability Game Zone** featuring drag-and-drop waste segregation, canvas arcade sorting, eco-quizzes with real-time feedback, and memory puzzles.
+- **Dual Responsive Engine:** Complete mobile-first responsive architecture (compact mobile header, bottom navigation bar, slide-over Explore Drawer) engineered alongside strict preservation of desktop layouts.
 
 ---
 
-### 3. 📷 EcoScan AI (Waste Vision & Material Classifier)
-* **Drag-and-Drop / File Upload Interface:** Interactive dropzone viewport supporting packaging photos, beverage containers, electronics, and kitchen scraps.
-* **Laser Reticle Sweep:** Animated futuristic HUD laser and reticle animation mimicking multi-spectral polymer scanning.
-* **Comprehensive Material Intelligence:**
-  * **Polymer & Compound Breakdown:** PET (#1), HDPE, Cardboard Kraft Fiber, Zinc/Manganese alkaline chemistry, Alu-alloys (#41 ALU), Soda-Lime silica glass, and PCB e-waste.
-  * **Disposal Stream & Bin Assignment:** Direct routing to Blue (Dry Recyclables), Green (Wet Organic Composting), or Red (Hazardous Domestic E-Waste).
-  * **Degradation Lifespan Telemetry:** Displays estimated decomposition timeline (e.g., 450 years for PET vs 14 days for banana peels).
-  * **Actionable Upcycling Tips:** Professional guidelines on crushing volume, removing adhesives, or vermicomposting.
-* **Direct Map Dispatch:** One-click `"Find Nearest Drop Facility"` button automatically transitions to the recycling map and pre-selects the appropriate facility filter chip.
+## 🌟 Signature Capabilities
+
+```
++----------------------------------------------------------------------------------------------------+
+|                                    AEGIS 3.0 LIVING PLATFORM                                       |
++----------------------------------------------------------------------------------------------------+
+|   3D SPATIAL COMPUTING  |  CITIZEN IDENTITY & ACCREDITATION  |      GEOSPATIAL & TELEMETRY         |
+|   - 3D Living City Twin |  - Digital Green Passport          |      - Esri Canvas Recycling Map    |
+|   - Earth Pulse Planet  |  - High-Fidelity PDF Export        |      - Real-Time Radar Wave Scan    |
+|   - Day / Night Cycles  |  - Long-Term Honors & Certificates |      - Floating Telemetry HUD       |
+|   - Monorail Transit    |  - Printable Parchment Credentials |      - CPCB AQI Severity Tower      |
++-------------------------+------------------------------------+-------------------------------------+
+|   GAMIFICATION & LEARN  |       CARBON LEDGER & AUDIT        |       ACCESSIBILITY & RESPONSIVE    |
+|   - 4-in-1 Game Zone    |  - Bharat Carbon Score Engine      |      - Mobile 5-Tab Navigation      |
+|   - SWM Waste Sorting   |  - CPCB Emissions Algorithm        |      - Slide-Over Explore Drawer    |
+|   - Timed Eco Quiz      |  - EcoScan AI Polymer Classifier   |      - Deep Forest & Sage Themes    |
+|   - Directives & Quests |  - Local Storage AegisDB 2.0       |      - Zero Horizontal Overflow     |
++----------------------------------------------------------------------------------------------------+
+```
 
 ---
 
-### 4. 🛂 Green Passport (Collectible Digital Citizen Identity)
-* **Diplomatic Sustainability Credential:** Luxury embossed gold-foiled identity document with official citizen registration serials, tier verification, and national carbon score status.
-* **Commemorative Visa Stamps:**
-  * 🚴‍♂️ **First Green Commute:** Unlocked upon logging walk, bicycle, or metro travel.
-  * 🔥 **7-Day Climate Streak:** Awarded for consistent sustainable daily actions.
-  * 🪴 **Compost Pioneer:** Commemorating 10kg of diverted organic wet waste.
-  * ⚡ **Certified E-Waste Drop:** Verification of safe hazardous battery/electronics disposal.
-  * 🌊 **Zero Virgin Plastic:** Unlocked via zero-plastic consumption milestones.
-  * 🎓 **Climate Mastermind:** Stamped upon scoring 100% on the Eco Trivia Quiz.
-  * 🏙️ **Living City Restorer:** Awarded for boosting districts in the 3D digital twin.
-  * 📷 **EcoScan Visionary:** Granted for scanning recyclable materials with AI vision.
-* **Click-to-Inspect:** Interactive stamp inspection displaying issuance dates, official categories, and milestone criteria.
-* **Print & Export:** One-click generation of the official printable Green Citizen Passport card.
+## 🧩 Platform Modules & Functional Deep-Dive
+
+### 1. 🛂 Digital Green Passport (Citizen Environmental Identity)
+* **Diplomatic-Grade Identity Booklet:** Designed with a luxury dark-emerald leatherette canvas, gold foil guilloché borders, national emblems, and official MoEFCC / MoHUA credential headings.
+* **8 Core Biometric & Ecological Telemetry Fields:**
+  * **Citizen Holder:** Profile name with active verified citizen checkmark.
+  * **Passport Number:** Cryptographically formatted registration number (e.g. `AEGIS-2026-IN-84920`).
+  * **Jurisdiction & Ward:** Local municipal administrative zone (e.g. `Mumbai City · Ward K-West`).
+  * **Validity Period:** Official 5-year active credential timeframe (`01 JAN 2026 – 31 DEC 2030`).
+  * **Eco-Rank & Tier Level:** Tiered citizen ranking system (`Green Cadet`, `Eco Explorer`, `Eco Guardian`, `Planetary Champion`) with numeric level designation.
+  * **Carbon Efficiency Score:** Calibrated index score with performance rating (`72 / 100 · Class A Low Impact`).
+  * **Lifetime $\text{CO}_2$ Avoided:** Cumulative avoided emissions displayed in kilograms (`342.8 kg CO₂e`).
+  * **Active Streak Counter:** Continuous consecutive daily tracking indicator (`14 Days Active`).
+* **Tier Progression Progress Bar:** Interactive visual indicator tracking accumulated citizen XP toward the next municipal rank milestone.
+* **Accredited Privileges Strip:** Dedicated perk chips including *Priority Municipal E-Waste Pickup*, *15% Public EV Transit Rebate*, and *Certified Mission LiFE Citizen*.
+* **8 Commemorative Visa Stamps Grid:**
+  * 🚴‍♂️ **First Green Commute:** Awarded for logging active pedestrian, bicycle, or metro commute.
+  * 🔥 **7-Day Climate Streak:** Commemorating uninterrupted week-long sustainable practices.
+  * 🪴 **Compost Pioneer:** Unlocked upon processing 10kg of diverted wet organic kitchen waste.
+  * ⚡ **Certified E-Waste Drop:** Verification of safe hazardous electronic or battery deposition.
+  * 🌊 **Zero Virgin Plastic:** Awarded for 30 consecutive days of single-use plastic avoidance.
+  * 🎓 **Climate Mastermind:** Stamped upon scoring 100% on the Eco Quiz Challenge.
+  * 🏙️ **Living City Restorer:** Awarded for inspecting and boosting 3D Living City urban districts.
+  * 📷 **EcoScan Visionary:** Granted for scanning packaging materials via EcoScan AI vision.
+* **Machine Readable Zone (MRZ):** Official two-line ICAO-style monospace chevron string (`P<IND<<AEGIS<SWACHH<CITIZEN<<<...`) with digital validation registry hash (`SHA-256`).
+* **High-Fidelity PDF Export Preview (`#passportExportModal`):**
+  * One-click generation of a luxury printable passport card.
+  * Features Guilloché gold framing, citizen avatar silhouette with verified seal, cryptographic QR matrix, full credential readout, stamp chips, and formatted `@media print` layout for vector saving.
 
 ---
 
-### 5. 🗺️ High-Reliability Circular Recycling Map
-* **CartoDB Dark Matter & Voyager Engine:** Fully resolved OpenStreetMap HTTP 403 / tile blocking bug by utilizing open-CORS, high-bandwidth CartoDB raster tiles with automatic OSM fallback.
-* **Hidden Container Rendering Fix:** Automatic lifecycle size invalidation hooks (0ms, 80ms, 250ms) to ensure zero grey-tile or misaligned bounding boxes when switching tabs.
-* **Multi-Category Facility Discovery:**
-  * ♻️ Verified Kabadiwalas & Scrap Aggregators
-  * 🖥️ Municipal Certified E-Waste Stations
-  * 🔋 24/7 Battery Drop-Off Kiosks
-  * 🥤 Swachh Plastic Deposit Bins
-  * 🔩 Industrial Iron & Metal Foundry Dealers
-* **Geospatial Tools:** Geolocation auto-detection, radius sliders (2km, 5km, 10km, 25km), Haversine spherical distance calculation, and direct Google Maps navigation triggers.
+### 2. 🎯 Mission Board & Long-Term Contributor Certificates
+* **Gamified Directives & Quests:** Time-filtered quests (`Daily`, `Weekly`, `Monthly`, `Community Drives`) aligned with municipal targets awarding redeemable Green Points.
+* **Citizen Sustainability Honors & Accreditations:**
+  * Specially designed accreditation tier awarded **exclusively to citizens with sustained, long-term contributions**:
+  1. 🌿 **Mission LiFE Active Contributor Commendation** *(MoEFCC)*:
+     * *Qualification Criteria:* Requires at least a **7-day streak** OR **250+ Green Points**.
+     * *Status:* Dynamic qualification check with contributor progress bar.
+  2. 🏆 **Urban Clean Air & Circular Steward Accreditation** *(NCAP & SBM)*:
+     * *Qualification Criteria:* Reserved for veteran citizens with **14+ days continuous streak** AND **500+ Green Points**.
+     * *Status:* Verifies multi-week dedication across waste segregation and emission reductions.
+  3. 👑 **Presidential Swachh-City Lifetime Climate Patron** *(National Climate Council)*:
+     * *Qualification Criteria:* The highest municipal honor requiring **30+ days continuous streak** OR **1,000+ lifetime points**.
+* **Accreditation Certificate Modal (`#certificateModal`):**
+  * Opens a printable luxury parchment certificate with double gold borders, corner ornaments, the National Ashoka emblem, official conferral citation, unique Credential ID, issue date, and official signatures of the Director General of Mission LiFE and the Municipal Climate Commissioner.
+  * One-click **"Save as PDF / Print"** action cleanly prints the certificate without web UI clutter.
 
 ---
 
-### 6. 🚨 Slide-Over Environmental Alerts Center
-* **Live Drawer Interface:** Accessible from anywhere on the platform via the top bell indicator with real-time unread badges.
-* **Severity Tiers:** Categorized into **Urgent** (Severe AQI, heatwave advisories), **Advisories** (E-Waste mobile kiosk schedules), and **Directives** (Plant-first dietary milestones).
-* **Interactive Controls:** Filter by severity, mark all alerts as read, or dismiss the notifications ledger.
+### 3. 🗺️ Circular Recycling Discovery Map
+* **Reliable Basemap Architecture:** Uses high-speed Esri World Dark Gray & Light Gray Canvas raster tiles with OpenStreetMap automatic fallback. Completely immune to CORS restrictions or watermark errors.
+* **Visual Telemetry & Radar Scan:**
+  * **Active Coverage Zone:** Dynamic circular perimeter reflecting the active search radius (2km, 5km, 10km, 25km).
+  * **Animated Radar Sweep Wave:** Pulsing inner radar circle providing real-time scanning feedback.
+  * **Pulsing GPS User Beacon:** Multi-ring glowing emerald location beacon centered on the active metropolitan zone.
+  * **Floating Telemetry HUD:** Sleek glassmorphism overlay displaying live hub counts, active streams, scanning radius, and GPS geo-sync state.
+* **Glowing Category-Coded Pins (`.recycling-map-pin`):**
+  * Replaces plain emojis with circular neon badges featuring category halos and drop-pointers:
+    * 🔵 **Plastics & Paper:** Cyan neon glow (`#06b6d4`).
+    * 🟣 **E-Waste Drop Hubs:** Violet neon glow (`#a855f7`).
+    * 🔴 **Batteries & Toxic Waste:** Crimson neon glow (`#ef4444`).
+    * 🟡 **Metals & Kabadiwalas:** Amber neon glow (`#f59e0b`).
+* **Rich Glassmorphism Popups:** Facility cards featuring stream tags, point reward chips, operating hours, verification badges, and a direct Google Maps GPS navigation link.
 
 ---
 
-### 7. 🎮 Sustainability Game Zone (4 Mini-Games)
-* **Quick Segregation:** Interactive drag-and-drop (and touch-click) sorting of items (Apple Core, Lithium Battery, Plastic Bottle, Newspaper, Circuit Board) into Wet, Dry, and Toxic bins with score streak tracking and points banking.
-* **Catch the Recyclables:** Real-time 60fps HTML5 canvas arcade game. Steer the collector bin with arrow keys, mouse, or touch to catch green items while dodging hazardous red batteries.
-* **Eco Trivia Quiz:** Timed multiple-choice quizzes with immediate scientific explanations and Green Point awards.
-* **Green Memory Match:** 12-tile card flipping puzzle pairing eco-symbols with move counters.
+### 4. 🚶 Daily Activity Tracker (Action Logging Engine)
+* **Multi-Pillar Logging Interface:** Quick tabs across Transport, Energy, Waste, Water, and Food.
+* **Polished Dark Action Type Presets:**
+  * Replaces default unstyled buttons with dark elevated interactive chips (`.chip-row button`).
+  * Features hover transforms, active glowing borders, and clean text contrast in both dark and light themes.
+* **Instant Emission Calculations:**
+  * Calculates real-time $\text{CO}_2\text{e}$ avoided in kilograms and immediately credits earned Green Points to the citizen profile.
+* **Searchable Activity Ledger:**
+  * History table recording every logged action with category tags, timestamp, quantitative metrics, and points awarded.
 
 ---
 
-### 8. 📊 Bharat Carbon Score Engine 2.0 & SVG Visualizations
-* **CPCB-Calibrated Algorithm:** 4-pillar calculation covering Mobility (commute & fuel), Grid Electricity, Dietary Footprint, and Waste Segregation (3Rs).
-* **Zero-Dependency SVG Analytics:** Area charts for 7D, 30D, 90D, and All-Time emissions trends.
-* **Aegis Eco Assistant:** Rule-based decision tree calculating highest impact drivers and personalized next actions.
+### 5. 🎮 Interactive Sustainability Game Zone
+* **Game 1: Waste Segregation Drag & Drop:**
+  * Drag or tap waste items (organic peel, newspaper, battery, circuit board) into appropriate color-coded bins (Green = Wet, Blue = Dry, Red = Hazardous).
+* **Game 2: Catch the Recyclables (Canvas Arcade):**
+  * Real-time 60 FPS HTML5 canvas arcade game. Steer the green bin with arrow keys or touch to catch clean recyclables while dodging hazardous falling batteries.
+* **Game 3: Eco Quiz Challenge (Refined & Fixed):**
+  * Multi-question interactive sustainability trivia.
+  * Option buttons are styled as dark elevated action bars with option badges (`A`, `B`, `C`, `D`), emerald hover highlights, and clear visual feedback states (`.correct` = glowing green, `.wrong` = glowing red).
+  * Awards +10 Green Points with instant scientific explanations.
+* **Game 4: Green Memory Match:**
+  * 12-tile memory flip puzzle matching environmental icons to build cognitive recall of circular economy principles.
 
 ---
 
-## 🛠️ Architecture & Tech Stack
+### 6. 🏙️ 3D Living City (Procedural Urban Digital Twin)
+* **Procedural Architectural Districts:** Visualizes 5 core sectors built with Three.js WebGL:
+  * Commercial Eco-Core (photovoltaic glass towers).
+  * Residential Green-Belt (living sedum roofs).
+  * Clean-Tech Industry (zero-effluent filtration).
+  * Circular Logistics Depot (polymer sorting silos).
+  * Bio-Corridor Parkland (micro-forest canopies & lakes).
+* **Autonomous Urban Simulations:**
+  * Elevated electric monorail gliding along a continuous circuit.
+  * Kinetic wind turbines with rotating multi-blade aerodynamics.
+  * Real-time day / night lighting cycles with atmospheric solar vectors and twilight illumination.
+* **District Inspection Raycaster:** Click any district to inspect real-time AQI compliance, solar kWh generation, and execute a "Boost District" gamification action.
 
-Aegis 3.0 is intentionally engineered with a zero-compilation, dependency-free architecture that runs straight out of the box in any browser:
+---
 
-| Layer | Technologies & Specifications |
+### 7. 🌐 Earth Pulse (Planetary 3D Observatory)
+* **Photorealistic Planetary Model:** Three.js textured sphere with NASA Blue Marble surface textures, normal bump mapping, atmospheric cloud drift, and day/night terminator lighting.
+* **Interactive Global Hotspots:** Clickable 3D marker pins positioned across major metropolitan centers (Mumbai, Delhi, Bengaluru, Tokyo, London, Sydney, São Paulo).
+* **Sensor Recalibration:** Raycasting pin inspection allows citizens to set their active municipal monitoring station directly from the globe.
+
+---
+
+### 8. 📷 EcoScan AI (Waste Vision & Material Classifier)
+* **Multi-Spectral Drag-and-Drop Viewport:** Upload or drop packaging photos, beverage containers, electronics, and food waste.
+* **Laser Reticle Sweep Animation:** High-tech scanning reticle simulating real-time polymer spectrometry.
+* **Granular Material Intelligence:** Compound classification (PET #1, HDPE, Kraft Cardboard, Silica Glass, PCBs), disposal bin assignment (Blue, Green, Red), estimated decomposition timeline, and upcycling tips.
+* **One-Click Map Dispatch:** Instantly transitions to the Recycling Map with the matching stream filter pre-selected.
+
+---
+
+## 📱 Mobile Responsiveness & Strict Desktop Parity
+
+| Viewport Dimension | Experience & Layout Behavior |
 | :--- | :--- |
-| **3D & Spatial Computing** | **Three.js r128**, **OrbitControls**, custom procedural geometries, phong/lambert shaders, raycasting, dynamic lighting, day/night cycles, and resource-conserving animation loops (`cancelAnimationFrame` on inactive tabs). |
-| **Geospatial Mapping** | **Leaflet.js 1.9.4**, **CartoDB Dark Matter / Voyager** raster tiles, Nominatim geocoder, Haversine spherical distance algorithms. |
-| **Computer Vision Simulation** | Custom HTML5 Canvas / FileReader drag-and-drop pipeline, laser reticle CSS animations, polymer reference classification matrix. |
-| **Markup & Semantics** | Semantic HTML5, accessible ARIA roles, responsive viewport scaling. |
-| **Styling & Design System** | Modern atmospheric design tokens, spatial glass panels (`backdrop-filter`), leatherette & gold foil passport styling, responsive grid & flexbox layouts (1920px down to 360px). |
-| **Logic & State Engine** | Vanilla JavaScript (ES6+), modular architecture, event-driven DOM manipulation. |
-| **Client Database** | **AegisDB 2.0** with JSON validation, versioned collections, and backup export/import to `localStorage`. |
+| **Desktop Screens (>900px)** | **100% Unaffected & Intact.** 14-tab horizontal navigation, multi-column grid layouts, 4-column stat strips, side-by-side recycling map layout, and desktop typography preserved with zero regression. |
+| **Tablet Screens (601px – 900px)** | Two-column cards, fluid grid adjustments, touch-optimized button targets, and scrollable filter pills. |
+| **Mobile Phones (361px – 600px)** | **Dedicated Mobile Layout.** Compact mobile top header, sticky 5-button bottom navigation bar, slide-over Explore Drawer for secondary screens, single-column certificate grid, and responsive 2-column passport stamp cards. |
+| **Ultra-Narrow Devices (≤360px)** | Single-column passport biometrics, single-column stamp grid, compact modal paddings, and guaranteed **zero horizontal overflow** (`scrollWidth === innerWidth`). |
 
 ---
 
-## 🚀 Running Aegis 3.0 Locally
+## 🛠️ Architecture & Technology Stack
 
-Since Aegis 3.0 is a pure client-side application, it requires no backend server, database setup, or API keys:
+Aegis 3.0 follows a clean, zero-compilation architecture that runs directly in any modern web browser without dependencies, build steps, or backend servers:
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/nimeshsurvegg-lgtm/aegis-sustainable-enviro
-   cd aegis-sustainable-enviro
-   ```
-
-2. **Open the platform:**
-   * **Direct Browser File:** Double-click `index.html` to open it in Chrome, Edge, Firefox, or Safari.
-   * **Local Development Server:**
-     ```bash
-     # Using Node.js
-     npx serve .
-     
-     # Or using Python 3
-     python -m http.server 8000
-     ```
-
-3. **Recommended First-Run Experience:**
-   * **Cinematic Hero:** Experience the photorealistic rotating 3D Earth planet in space with dynamic clouds and atmospheric halo glow.
-   * **Earth Pulse 3D Globe:** Visit the planetary observatory featuring NASA Blue Marble textures, independent atmospheric cloud drift, day/night terminator lighting, interactive 3D pins with radar pulse rings, and quick city jump chips (Mumbai, Delhi, Bengaluru, Tokyo, London, New York, Paris, Singapore, Sydney, São Paulo, Cairo, Nairobi).
-   * **3D Living City:** Click **"Explore 3D Living City"** to inspect urban districts, toggle day/night lighting, and trace the high-speed monorail.
-   * **EcoScan AI:** Drag and drop any image into the scanner or click to load a sample to inspect polymer classification.
-   * **Recycling Map:** Switch to the map to explore reliable, watermark-free Esri Canvas basemaps with automatic Dark/Light theme switching and facility discovery.
-   * **Green Passport & Missions:** View your official citizen stamps, track Bharat Carbon Score trends, and complete directives with standardized `+PTS` badges.
-   * **Dual Theme Engine:** Toggle between the atmospheric deep forest Dark Theme and the high-contrast warm off-white/emerald Light Theme with zero washed-out elements.
+| Layer | Technologies & Implementations |
+| :--- | :--- |
+| **3D & Spatial Computing** | **Three.js r128**, `OrbitControls`, custom procedural geometries, phong/lambert shaders, raycasting, dynamic lighting, day/night cycles, and resource-conserving animation loops (`cancelAnimationFrame` on inactive tabs). |
+| **Geospatial Mapping** | **Leaflet.js 1.9.4**, **Esri World Dark/Light Gray Canvas** tiles with OSM fallback, animated SVG radar sweeps, custom category pins, and Haversine distance calculations. |
+| **Styling & Design System** | Pure CSS3 with CSS Custom Properties (Design Tokens), spatial glassmorphism (`backdrop-filter`), luxury gold foil styling, CSS Grid, Flexbox, and fluid `@media` breakpoints. |
+| **Markup & Semantics** | Semantic HTML5, accessible ARIA roles (`role="dialog"`, `aria-modal="true"`, `aria-live="polite"`), and vector SVG graphics. |
+| **Client State & Persistence** | **AegisDB 2.0** — A robust client-side storage engine built on `localStorage` featuring JSON validation, default seeding, schema migrations, and backup export/import. |
+| **Print & Document Engine** | High-resolution `@media print` stylesheets configured for 300 DPI vector rendering of certificates and passport ID cards. |
 
 ---
 
-## 📜 Regulatory Standards & Aligned Frameworks
+## 📂 Repository File Hierarchy
 
-Aegis 3.0 references and supports official environmental policies:
-* **Mission LiFE (Lifestyle for Environment)** — Introduced at COP26.
-* **Solid Waste Management Rules (SWM), 2016** — Source segregation mandates.
-* **Swachh Bharat Mission (Urban 2.0)** — Garbage-free cities target.
-* **E-Waste (Management) Rules, 2022** — Extended Producer Responsibility (EPR).
-* **Plastic Waste Management Amendment, 2021** — Ban on Single-Use Plastics.
-* **National Clean Air Programme (NCAP)** — Ambient air quality particulate reduction targets.
+```
+aegis-sustainable-enviro/
+├── assets/
+│   └── textures/
+│       ├── earth_atmos_2048.jpg   # NASA Blue Marble planetary surface texture
+│       ├── earth_clouds_1024.png  # Alpha-blended dynamic atmospheric cloud layer
+│       └── earth_normal_2048.jpg  # Topographic bump and elevation normal map
+├── index.html                     # Semantic application markup (all 14 modules & modals)
+├── script.js                      # Core application logic, WebGL loops, DB, and interactions
+├── style.css                      # Design system, tokens, animations, responsive breakpoints
+├── LICENSE                        # MIT Open-Source License
+├── CONTRIBUTING.md                # Community contribution guidelines
+├── CODE_OF_CONDUCT.md             # Contributor Covenant Code of Conduct
+└── README.md                      # Comprehensive platform documentation
+```
+
+---
+
+## 🚀 Quick Start & Local Setup
+
+Because Aegis 3.0 has **zero build dependencies**, you can run it immediately without `npm install` or complex build configurations:
+
+### Option 1: Direct Browser Launch
+Simply double-click `index.html` or open it directly in Google Chrome, Mozilla Firefox, Microsoft Edge, or Safari.
+
+### Option 2: Local HTTP Server (Recommended for WebGL Textures)
+To ensure optimal local texture loading for Three.js WebGL shaders, run a lightweight local static server:
+
+```bash
+# Clone the repository
+git clone https://github.com/nimeshsurvegg-lgtm/aegis-sustainable-enviro.git
+cd aegis-sustainable-enviro
+
+# Using Node.js (npx)
+npx serve .
+
+# Or using Python 3
+python -m http.server 8080
+
+# Or using PHP
+php -S localhost:8080
+```
+Then navigate to `http://localhost:8080` in your web browser.
+
+---
+
+## 📜 Regulatory Alignment & Policy Standards
+
+Aegis 3.0 references and operationalizes major national and global environmental frameworks:
+* **Mission LiFE (Lifestyle for Environment)** — Directives introduced at COP26 promoting individual pro-planet behaviors.
+* **Solid Waste Management Rules (SWM), 2016** — Standardized 3-stream waste segregation mandates (Wet Organic, Dry Recyclable, Hazardous Domestic).
+* **Swachh Bharat Mission (Urban 2.0)** — Targets for 100% garbage-free cities, scientific waste processing, and dumpsite remediation.
+* **E-Waste (Management) Rules, 2022** — Extended Producer Responsibility (EPR) and certified municipal drop-off networks.
+* **Plastic Waste Management Rules & Amendments** — Elimination of single-use plastics and promotion of circular reuse models.
+* **National Clean Air Programme (NCAP)** — Standardized CPCB air quality index metrics and ambient particulate reduction targets.
 
 ---
 
 ## 📄 License & Attribution
 
-Designed and developed for **Mission Swachh-City**. Concept prototype for Environmental Intelligence, Climate-Tech Demonstrations, Municipal Spatial Digital Twins, and Civic Engagement Hackathons.
+Distributed under the **MIT License**. See [`LICENSE`](file:///C:/Users/Nimesh/Documents/aegis-sustainable-enviro/LICENSE) for more details.
+
+Designed & Developed for **Mission Swachh-City**. Concept prototype engineered for Environmental Intelligence, Climate-Tech Demonstrations, Municipal Spatial Digital Twins, and Civic Engagement.

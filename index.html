@@ -958,24 +958,105 @@
     </div>
 
     <div class="passport-container">
-      <div class="passport-book">
+      <div class="passport-book" id="digitalPassportCard">
+        <!-- Top Official Security Header -->
+        <div class="passport-security-header">
+          <div class="passport-sec-pill">
+            <span class="sec-dot"></span>
+            <span>VERIFIED CITIZEN CREDENTIAL · MOHUA / MOEFCC</span>
+          </div>
+          <div class="passport-sec-code mono">MRZ-AEGIS-2026-IN</div>
+        </div>
+
+        <!-- Central Emblem & Title -->
         <div class="passport-emblem">
-          <div class="gold-seal">🌍</div>
-          <div class="passport-title">Mission Swachh-City</div>
-          <div style="font-family:var(--font-mono); font-size:11px; color:#eed6a1; letter-spacing:0.12em;">REPUBLIC OF INDIA · CITIZEN SUSTAINABILITY PASSPORT</div>
+          <div class="gold-seal">
+            <span class="seal-icon">🌿</span>
+            <div class="seal-ring"></div>
+          </div>
+          <div class="passport-subhead">REPUBLIC OF INDIA · MISSION SWACHH-CITY</div>
+          <div class="passport-title">Digital Green Passport</div>
+          <div class="passport-reg-line mono">OFFICIAL CITIZEN ENVIRONMENTAL IDENTITY &amp; IMPACT LEDGER</div>
         </div>
 
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:16px 0; border-top:1px solid rgba(184,151,88,0.3); border-bottom:1px solid rgba(184,151,88,0.3); font-size:13px; color:#f0f7f3;">
-          <div><span style="color:#eed6a1; font-size:11px;">HOLDER:</span><br><b id="passCitizenName">Citizen</b></div>
-          <div><span style="color:#eed6a1; font-size:11px;">PASSPORT NO:</span><br><b class="mono" id="passNumber">AEGIS-2026-IN</b></div>
-          <div><span style="color:#eed6a1; font-size:11px;">ECO-RANK:</span><br><b id="passRank">Eco Explorer</b></div>
-          <div><span style="color:#eed6a1; font-size:11px;">CARBON SCORE:</span><br><b class="mono" id="passScore" style="color:var(--green-soft);">72 / 100</b></div>
+        <!-- Citizen Identity & Key Stats Grid -->
+        <div class="passport-meta-grid">
+          <div class="pm-cell">
+            <span class="pm-lbl">CITIZEN HOLDER</span>
+            <div class="pm-val"><b id="passCitizenName">Citizen</b> <span class="badge-verified sm">Verified</span></div>
+          </div>
+          <div class="pm-cell">
+            <span class="pm-lbl">PASSPORT IDENTIFIER</span>
+            <div class="pm-val mono"><b id="passNumber">AEGIS-2026-IN-84920</b></div>
+          </div>
+          <div class="pm-cell">
+            <span class="pm-lbl">JURISDICTION &amp; WARD</span>
+            <div class="pm-val"><b id="passJurisdiction">Mumbai City · Ward K-West</b></div>
+          </div>
+          <div class="pm-cell">
+            <span class="pm-lbl">VALIDITY PERIOD</span>
+            <div class="pm-val mono"><b style="color:#eed6a1;">01 JAN 2026 – 31 DEC 2030</b></div>
+          </div>
+          <div class="pm-cell">
+            <span class="pm-lbl">SUSTAINABILITY RANK</span>
+            <div class="pm-val"><b id="passRank" style="color:var(--green-soft);">Eco Explorer</b> · <span class="mono" id="passTierLevel">Tier II</span></div>
+          </div>
+          <div class="pm-cell">
+            <span class="pm-lbl">CARBON EFFICIENCY SCORE</span>
+            <div class="pm-val mono"><b id="passScore" style="color:var(--green-soft);">72 / 100</b> <span class="badge-tag">Class A</span></div>
+          </div>
+          <div class="pm-cell">
+            <span class="pm-lbl">LIFETIME CO₂ AVOIDED</span>
+            <div class="pm-val mono"><b id="passCo2Avoided" style="color:var(--cyan);">342.8 kg CO₂e</b></div>
+          </div>
+          <div class="pm-cell">
+            <span class="pm-lbl">ACTIVE LOGGING STREAK</span>
+            <div class="pm-val mono"><b id="passActiveStreak" style="color:var(--amber);">14 Days Active</b></div>
+          </div>
         </div>
 
-        <div style="margin-top:20px;">
-          <div style="font-size:12px; font-weight:700; color:#eed6a1; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:8px;">Verified Citizen Visa Stamps</div>
+        <!-- Tier Progress Bar -->
+        <div class="passport-tier-progress">
+          <div class="pt-head">
+            <span class="pt-lbl">Current Tier Level Progression</span>
+            <span class="pt-xp mono" id="passTierXp">380 / 500 XP to Eco Guardian</span>
+          </div>
+          <div class="pt-bar-track">
+            <div class="pt-bar-fill" id="passTierBar" style="width: 76%;"></div>
+          </div>
+        </div>
+
+        <!-- Municipal Privileges & Citizen Endorsements -->
+        <div class="passport-privileges">
+          <div class="priv-title">Accredited Citizen Privileges</div>
+          <div class="priv-badges">
+            <div class="priv-chip"><span>⚡</span> Priority E-Waste Pickup</div>
+            <div class="priv-chip"><span>🚇</span> 15% EV Transit Rebate</div>
+            <div class="priv-chip"><span>📜</span> Mission LiFE Certified</div>
+            <div class="priv-chip"><span>🌱</span> Seedling Allocation</div>
+          </div>
+        </div>
+
+        <!-- Verified Citizen Visa Stamps -->
+        <div class="passport-stamps-section">
+          <div class="stamps-head">
+            <div class="stamps-title">Verified Citizen Visa Stamps (<span id="passStampedCount">7</span>/8 Active)</div>
+            <div class="stamps-note">Tap any stamp for condition &amp; cryptographic issuance data</div>
+          </div>
           <div class="passport-stamps-grid" id="passportStampsGrid">
             <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Machine Readable Zone (MRZ) & Digital Signatures -->
+        <div class="passport-mrz-box">
+          <div class="mrz-text mono">
+            P&lt;IND&lt;&lt;AEGIS&lt;SWACHH&lt;CITIZEN&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>
+            2026IN0845214M3112318&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;4
+          </div>
+          <div class="mrz-meta">
+            <span>DIGITAL REGISTRY HASH: <b class="mono">SHA256:8f2a91...e41c</b></span>
+            <span>ISSUING AUTHORITY: <b>CENTRAL CLIMATE DIRECTIVE</b></span>
           </div>
         </div>
       </div>
@@ -1115,6 +1196,12 @@
       <!-- Right: Interactive Leaflet Canvas -->
       <div class="map-container-wrap">
         <div id="leafletMap"></div>
+        <div class="map-hud-telemetry" id="mapHudTelemetry">
+          <div class="hud-item"><span class="hud-dot live"></span> <span id="hudFacilityCount">8 Certified Hubs</span></div>
+          <div class="hud-item"><span class="hud-icon">♻️</span> <span>4 Waste Streams</span></div>
+          <div class="hud-item"><span class="hud-icon">📍</span> <span id="hudActiveRange">5 km Active Zone</span></div>
+          <div class="hud-item"><span class="hud-icon">📡</span> <span>Live Radar Scan</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -1209,6 +1296,17 @@
 
     <!-- Missions Grid -->
     <div class="mission-grid" id="missionGrid"></div>
+
+    <!-- Long-Term Contributor Accreditations & Certificates -->
+    <div class="page-head" style="margin-top:44px; margin-bottom:16px;">
+      <div class="eyebrow" style="color:var(--amber);">Honor Roll &amp; Accreditations</div>
+      <h3>Citizen Sustainability Honors &amp; Certificates</h3>
+      <p>Official certified credentials awarded exclusively to dedicated citizens with sustained, long-term contributions to Mission LiFE directives and urban environmental stewardship.</p>
+    </div>
+
+    <div class="cert-grid" id="missionCertsGrid">
+      <!-- Populated dynamically based on user's sustained streak & points -->
+    </div>
 
     <!-- Milestones & Coupons Unlocking Section -->
     <div class="page-head" style="margin-top:44px; margin-bottom:16px;">
@@ -1628,6 +1726,177 @@
     <div style="display:flex; gap:10px;">
       <button class="cta ghost w-100" onclick="window.print()">🖨️ Print Certificate</button>
       <button class="cta w-100" onclick="closeImpactReportModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- Digital Green Passport Export & Print Modal -->
+<div class="modal-overlay hide" id="passportExportModal" role="dialog" aria-modal="true">
+  <div class="modal-card passport-modal-card" style="max-width:680px;">
+    <div class="flex-between mb-2">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:22px;">🛂</span>
+        <h3 style="margin:0;">Official Green Passport Document</h3>
+      </div>
+      <button class="icon-btn" onclick="closePassportExportModal()" style="width:28px; height:28px;">✕</button>
+    </div>
+
+    <div class="passport-print-document" id="printablePassportCard">
+      <!-- Luxury Guilloche Border Card -->
+      <div class="pp-border-frame">
+        <div class="pp-header">
+          <div class="pp-emblem">🇮🇳</div>
+          <div class="pp-gov-title">REPUBLIC OF INDIA · MISSION SWACHH-CITY</div>
+          <div class="pp-gov-sub">CENTRAL CLIMATE DIRECTIVE &amp; MUNICIPAL EMISSIONS REGISTRY</div>
+          <div class="pp-doc-badge">OFFICIAL VERIFIED SUSTAINABILITY PASSPORT</div>
+        </div>
+
+        <div class="pp-body-grid">
+          <div class="pp-photo-col">
+            <div class="pp-avatar-box">
+              <div class="pp-avatar-icon" id="ppExpAvatar">👤</div>
+              <div class="pp-verified-stamp">VERIFIED</div>
+            </div>
+            <div class="pp-qr-box">
+              <div class="pp-qr-code">
+                <svg width="68" height="68" viewBox="0 0 100 100" fill="currentColor">
+                  <path d="M0,0 h30 v30 h-30 z M10,10 h10 v10 h-10 z M70,0 h30 v30 h-30 z M80,10 h10 v10 h-10 z M0,70 h30 v30 h-30 z M10,80 h10 v10 h-10 z M40,10 h20 v10 h-20 z M10,40 h10 v20 h-10 z M40,40 h20 v20 h-20 z M70,40 h10 v10 h-10 z M80,50 h20 v20 h-20 z M40,70 h20 v10 h-20 z M70,80 h10 v20 h-10 z M90,80 h10 v20 h-10 z"/>
+                </svg>
+              </div>
+              <span class="mono pp-hash-sn" id="ppExpHash">ID: 8F2A-IN26</span>
+            </div>
+          </div>
+
+          <div class="pp-data-col">
+            <div class="pp-row">
+              <div class="pp-field"><span class="pp-lbl">CITIZEN HOLDER</span><b id="ppExpName">Citizen</b></div>
+              <div class="pp-field"><span class="pp-lbl">PASSPORT NO</span><b class="mono" id="ppExpNumber">AEGIS-2026-IN-84920</b></div>
+            </div>
+            <div class="pp-row">
+              <div class="pp-field"><span class="pp-lbl">ECO RANK</span><b id="ppExpRank">Eco Explorer</b></div>
+              <div class="pp-field"><span class="pp-lbl">CARBON SCORE</span><b class="mono" id="ppExpScore" style="color:#059669;">72 / 100 (Class A)</b></div>
+            </div>
+            <div class="pp-row">
+              <div class="pp-field"><span class="pp-lbl">CO₂ AVOIDED</span><b class="mono" id="ppExpCo2">342.8 kg CO₂e</b></div>
+              <div class="pp-field"><span class="pp-lbl">STREAK</span><b class="mono" id="ppExpStreak">14 Days Sustained</b></div>
+            </div>
+            <div class="pp-row">
+              <div class="pp-field"><span class="pp-lbl">JURISDICTION</span><b>Mumbai City (MH)</b></div>
+              <div class="pp-field"><span class="pp-lbl">VALIDITY</span><b class="mono">2026 – 2030</b></div>
+            </div>
+
+            <!-- Visa Stamps Strip -->
+            <div class="pp-stamps-preview">
+              <span class="pp-lbl">AUTHENTICATED COMMEMORATIVE STAMPS</span>
+              <div class="pp-stamps-row" id="ppExpStampsRow">
+                <!-- Stamped badges -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Machine Readable Zone (MRZ) -->
+        <div class="pp-mrz mono">
+          P&lt;IND&lt;&lt;AEGIS&lt;SWACHH&lt;CITIZEN&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>
+          2026IN0845214M3112318&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;4
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+      <span style="font-size:12px; color:var(--text-muted);">High-Fidelity PDF Export · Officially recognized digital credential</span>
+      <div style="display:flex; gap:10px;">
+        <button class="cta ghost" onclick="closePassportExportModal()">Close</button>
+        <button class="cta" onclick="printPassportDocument()">🖨️ Save as PDF / Print</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Long-Term Contributor Honor Certificate Modal -->
+<div class="modal-overlay hide" id="certificateModal" role="dialog" aria-modal="true">
+  <div class="modal-card cert-modal-card" style="max-width:720px;">
+    <div class="flex-between mb-2">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:22px;">📜</span>
+        <h3 style="margin:0;">Citizen Sustainability Honor &amp; Accreditation</h3>
+      </div>
+      <button class="icon-btn" onclick="closeCertificateModal()" style="width:28px; height:28px;">✕</button>
+    </div>
+
+    <div class="cert-paper" id="printableCertPaper">
+      <div class="cert-outer-border">
+        <div class="cert-inner-border">
+          <div class="cert-corner-ornament tl"></div>
+          <div class="cert-corner-ornament tr"></div>
+          <div class="cert-corner-ornament bl"></div>
+          <div class="cert-corner-ornament br"></div>
+
+          <div class="cert-top-emblem">
+            <div class="cert-gov-crest">🏛️</div>
+            <div class="cert-gov-title">REPUBLIC OF INDIA · MISSION SWACHH-CITY</div>
+            <div class="cert-gov-directorate">Central Environmental Registry &amp; Climate Action Directorate</div>
+          </div>
+
+          <div class="cert-ribbon-title">CERTIFICATE OF SUSTAINED ENVIRONMENTAL EXCELLENCE</div>
+          
+          <div class="cert-intro">This official credential is conferred upon</div>
+          <div class="cert-recipient-name" id="certCitizenName">Citizen</div>
+
+          <p class="cert-text" id="certBodyText">
+            in solemn recognition of sustained, long-term dedication to urban sustainability, continuous carbon footprint reduction, and faithful adherence to India's <strong>Mission LiFE</strong> lifestyle directives.
+          </p>
+
+          <div class="cert-meta-grid">
+            <div class="cm-item">
+              <span class="cm-lbl">HONOR DISTINCTION</span>
+              <b id="certHonorTitle">Urban Clean Air &amp; Circular Steward</b>
+            </div>
+            <div class="cm-item">
+              <span class="cm-lbl">CREDENTIAL ID</span>
+              <b class="mono" id="certRegId">AEGIS-HONOR-2026-IN-4921</b>
+            </div>
+            <div class="cm-item">
+              <span class="cm-lbl">CONFERRAL DATE</span>
+              <b class="mono" id="certConferDate">23 November 2026</b>
+            </div>
+            <div class="cm-item">
+              <span class="cm-lbl">ACCREDITATION LEVEL</span>
+              <b id="certAccredTier" style="color:#059669;">Verified Long-Term Contributor</b>
+            </div>
+          </div>
+
+          <div class="cert-signatures-row">
+            <div class="cert-sig">
+              <div class="cert-sig-line">Dr. Arunabha Sharma</div>
+              <div class="cert-sig-sub">Director General, Mission LiFE</div>
+            </div>
+            <div class="cert-seal-graphic">
+              <div class="cert-seal-badge">
+                <div class="cs-text-top">MISSION LiFE</div>
+                <div class="cs-star">★ 2026 ★</div>
+                <div class="cs-text-btm">OFFICIAL</div>
+              </div>
+            </div>
+            <div class="cert-sig">
+              <div class="cert-sig-line">Pooja Mukherjee, IAS</div>
+              <div class="cert-sig-sub">Chief Municipal Climate Officer</div>
+            </div>
+          </div>
+
+          <div class="cert-footer-hash mono">
+            CRYPTOGRAPHIC LEDGER VALIDATION: SHA256: 7e2f1839...c408b · VERIFIABLE AT AEGIS.GOV.IN
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+      <span style="font-size:12px; color:var(--text-muted);">Suitable for professional portfolios, academic accreditation &amp; framing</span>
+      <div style="display:flex; gap:10px;">
+        <button class="cta ghost" onclick="closeCertificateModal()">Close</button>
+        <button class="cta" onclick="printCertificateDocument()">🖨️ Save as PDF / Print</button>
+      </div>
     </div>
   </div>
 </div>

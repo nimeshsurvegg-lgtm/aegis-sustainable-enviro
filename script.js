@@ -1884,6 +1884,22 @@ function inspectStamp(id) {
   }
 }
 
+function getRank(pts) {
+  if (pts >= 1000) return { title: 'Planetary Champion', level: 4, minPts: 1000, maxPts: 2000 };
+  if (pts >= 500) return { title: 'Eco Guardian', level: 3, minPts: 500, maxPts: 1000 };
+  if (pts >= 250) return { title: 'Eco Explorer', level: 2, minPts: 250, maxPts: 500 };
+  return { title: 'Green Cadet', level: 1, minPts: 0, maxPts: 250 };
+}
+
+function hashString(str) {
+  let hash = 0;
+  for (let i = 0; i < (str || '').length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return hash;
+}
+
 function renderPassportScreen() {
   const profile = AegisDB.getProfile() || {};
   const pts = profile.totalPoints || 380;
@@ -1891,28 +1907,100 @@ function renderPassportScreen() {
   const passName = document.getElementById('passCitizenName');
   const passRank = document.getElementById('passRank');
   const passScore = document.getElementById('passScore');
+  const passJurisdiction = document.getElementById('passJurisdiction');
+  const passTierLevel = document.getElementById('passTierLevel');
+  const passCo2 = document.getElementById('passCo2Avoided');
+  const passStreak = document.getElementById('passActiveStreak');
+  const passTierXp = document.getElementById('passTierXp');
+  const passTierBar = document.getElementById('passTierBar');
+  const passStampedCount = document.getElementById('passStampedCount');
 
-  if (passName) passName.textContent = profile.name || 'Citizen';
+  const citizenName = profile.name || 'Citizen';
+  const cityName = profile.city || 'Mumbai';
+  const carbonScore = profile.carbonScore || 72;
+  const streak = profile.streakDays || 14;
+  const co2Avoided = profile.totalCo2Avoided || 342.8;
+
+  if (passName) passName.textContent = citizenName;
   if (passRank) passRank.textContent = currentRank.title;
-  if (passScore) passScore.textContent = `${profile.carbonScore || 72} / 100`;
+  if (passScore) passScore.textContent = `${carbonScore} / 100`;
+  if (passJurisdiction) passJurisdiction.textContent = `${cityName} City · Ward K-West`;
+  if (passTierLevel) passTierLevel.textContent = `Tier ${currentRank.level || 2}`;
+  if (passCo2) passCo2.textContent = `${co2Avoided.toFixed(1)} kg CO₂e`;
+  if (passStreak) passStreak.textContent = `${streak} Days Active`;
+
+  // XP Progress calculation
+  const nextTarget = currentRank.maxPts || 500;
+  const currentLevelMin = currentRank.minPts || 0;
+  const levelXp = Math.max(0, pts - currentLevelMin);
+  const levelTotal = Math.max(1, nextTarget - currentLevelMin);
+  const pct = Math.min(100, Math.round((levelXp / levelTotal) * 100));
+
+  if (passTierXp) passTierXp.textContent = `${pts} / ${nextTarget} XP to Next Tier`;
+  if (passTierBar) passTierBar.style.width = `${pct}%`;
+
+  const stampedTotal = PASSPORT_STAMPS.filter(s => s.stamped).length;
+  if (passStampedCount) passStampedCount.textContent = stampedTotal;
 
   const grid = document.getElementById('passportStampsGrid');
-  if (!grid) return;
-
-  grid.innerHTML = PASSPORT_STAMPS.map(s => `
-    <div class="visa-stamp ${s.stamped ? 'stamped' : ''}" onclick="inspectStamp('${s.id}')" title="${s.condition}">
-      <div style="font-size:22px; margin-bottom:4px;">${s.stamped ? s.icon : '🔒'}</div>
-      <div class="stamp-title">${s.title}</div>
-      <div style="font-size:10px; color:var(--text-muted); margin-top:2px;">${s.stamped ? s.date : 'Locked'}</div>
-    </div>
-  `).join('');
+  if (grid) {
+    grid.innerHTML = PASSPORT_STAMPS.map(s => `
+      <div class="visa-stamp ${s.stamped ? 'stamped' : ''}" onclick="inspectStamp('${s.id}')" title="${s.condition}">
+        <div style="font-size:22px; margin-bottom:4px;">${s.stamped ? s.icon : '🔒'}</div>
+        <div class="stamp-title">${s.title}</div>
+        <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">${s.stamped ? s.date : 'Locked'}</div>
+      </div>
+    `).join('');
+  }
 }
 
 function exportPassportCard() {
-  showToast('Generating official Green Passport Card…');
+  const profile = AegisDB.getProfile() || {};
+  const pts = profile.totalPoints || 380;
+  const currentRank = getRank(pts);
+  const citizenName = profile.name || 'Citizen';
+  const cityName = profile.city || 'Mumbai';
+  const carbonScore = profile.carbonScore || 72;
+  const streak = profile.streakDays || 14;
+  const co2Avoided = profile.totalCo2Avoided || 342.8;
+
+  const expName = document.getElementById('ppExpName');
+  const expNumber = document.getElementById('ppExpNumber');
+  const expRank = document.getElementById('ppExpRank');
+  const expScore = document.getElementById('ppExpScore');
+  const expCo2 = document.getElementById('ppExpCo2');
+  const expStreak = document.getElementById('ppExpStreak');
+  const expStampsRow = document.getElementById('ppExpStampsRow');
+
+  if (expName) expName.textContent = citizenName;
+  if (expNumber) expNumber.textContent = `AEGIS-2026-IN-${Math.abs(hashString(citizenName)) % 90000 + 10000}`;
+  if (expRank) expRank.textContent = `${currentRank.title} (Tier ${currentRank.level || 2})`;
+  if (expScore) expScore.textContent = `${carbonScore} / 100 (Class A)`;
+  if (expCo2) expCo2.textContent = `${co2Avoided.toFixed(1)} kg CO₂e`;
+  if (expStreak) expStreak.textContent = `${streak} Days Sustained`;
+
+  if (expStampsRow) {
+    const activeStamps = PASSPORT_STAMPS.filter(s => s.stamped);
+    expStampsRow.innerHTML = activeStamps.map(s => `
+      <span class="pp-stamp-chip">${s.icon} ${s.title}</span>
+    `).join('');
+  }
+
+  const modal = document.getElementById('passportExportModal');
+  if (modal) modal.classList.remove('hide');
+  showToast('Opening official Green Passport Document…');
+}
+
+function closePassportExportModal() {
+  const modal = document.getElementById('passportExportModal');
+  if (modal) modal.classList.add('hide');
+}
+
+function printPassportDocument() {
+  showToast('Opening print dialog for PDF export…');
   setTimeout(() => {
     window.print();
-  }, 400);
+  }, 300);
 }
 
 /* ===================================================================
@@ -2190,19 +2278,69 @@ function refreshMapTiles() {
   }
 }
 
+let mapAuxLayers = [];
+
+const FACILITY_CAT_THEME = {
+  'plastic': { color: '#06b6d4', glow: 'rgba(6, 182, 212, 0.55)', label: 'Dry Recyclables' },
+  'e-waste': { color: '#a855f7', glow: 'rgba(168, 85, 247, 0.55)', label: 'E-Waste Hub' },
+  'battery': { color: '#ef4444', glow: 'rgba(239, 68, 68, 0.55)', label: 'Battery Drop' },
+  'metal': { color: '#f59e0b', glow: 'rgba(245, 158, 11, 0.55)', label: 'Metal & Scrap' },
+  'default': { color: '#3ddc84', glow: 'rgba(61, 220, 132, 0.55)', label: 'Certified Hub' }
+};
+
 function plotFacilitiesOnMap() {
   if (!leafletMap) return;
 
   mapMarkers.forEach(m => leafletMap.removeLayer(m.marker));
   mapMarkers = [];
+  mapAuxLayers.forEach(l => leafletMap.removeLayer(l));
+  mapAuxLayers = [];
 
+  // Coverage radius zone circle with dashed border
+  const coverageCircle = L.circle([currentCenter.lat, currentCenter.lng], {
+    radius: currentRadiusKm * 1000,
+    color: '#3ddc84',
+    fillColor: '#3ddc84',
+    fillOpacity: 0.05,
+    weight: 1.5,
+    dashArray: '6, 8'
+  }).addTo(leafletMap);
+  mapAuxLayers.push(coverageCircle);
+
+  // Animated radar wave circle
+  const radarCircle = L.circle([currentCenter.lat, currentCenter.lng], {
+    radius: Math.min(currentRadiusKm * 1000 * 0.45, 1500),
+    color: '#06b6d4',
+    fillColor: '#06b6d4',
+    fillOpacity: 0.08,
+    weight: 1.2,
+    dashArray: '4, 6'
+  }).addTo(leafletMap);
+  mapAuxLayers.push(radarCircle);
+
+  // Sleek beacon center marker
   const userIcon = L.divIcon({
     className: '',
-    html: '<div style="width:16px;height:16px;border-radius:50%;background:#3ddc84;border:3px solid #fff;box-shadow:0 0 14px #3ddc84;"></div>'
+    html: `
+      <div class="map-user-beacon" title="Your Center Location: ${currentCenter.name}">
+        <div class="beacon-core"></div>
+        <div class="beacon-ripple"></div>
+      </div>
+    `,
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+    popupAnchor: [0, -12]
   });
-  L.marker([currentCenter.lat, currentCenter.lng], { icon: userIcon })
+
+  const centerMarker = L.marker([currentCenter.lat, currentCenter.lng], { icon: userIcon })
     .addTo(leafletMap)
-    .bindPopup(`<b>${currentCenter.name}</b><br>Your designated location.`);
+    .bindPopup(`
+      <div style="font-family:var(--font-body); font-size:12.5px; padding:2px;">
+        <b style="color:var(--green); font-size:13.5px;">📍 ${currentCenter.name} Center</b><br>
+        <span style="color:var(--text-muted); font-size:11.5px;">Active scanning origin · ${currentRadiusKm} km coverage</span>
+      </div>
+    `);
+  mapAuxLayers.push(centerMarker);
 
   const listContainer = document.getElementById('mapFacilityList');
   if (listContainer) listContainer.innerHTML = '';
@@ -2215,20 +2353,37 @@ function plotFacilitiesOnMap() {
 
     if (distKm <= currentRadiusKm) {
       visibleCount++;
+      const themeCfg = FACILITY_CAT_THEME[f.cat] || FACILITY_CAT_THEME['default'];
       const icon = L.divIcon({
         className: '',
-        html: `<div style="font-size:24px; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.5));">${f.icon}</div>`,
-        iconSize: [28, 28]
+        html: `
+          <div class="recycling-map-pin" style="--pin-color: ${themeCfg.color}; --pin-glow: ${themeCfg.glow};" title="${f.name}">
+            <span class="pin-icon">${f.icon}</span>
+          </div>
+        `,
+        iconSize: [36, 42],
+        iconAnchor: [18, 42],
+        popupAnchor: [0, -38]
       });
 
       const marker = L.marker([mLat, mLng], { icon }).addTo(leafletMap);
       const popupHtml = `
-        <div style="font-family:var(--font-body); font-size:12.5px; line-height:1.4;">
-          <b style="font-size:13.5px; color:var(--text-main);">${f.name}</b><br>
-          <span style="color:var(--text-muted);">${f.addr}</span><br>
-          <div style="margin:4px 0;">⭐ <b>${f.pts} Green Points</b> on Drop</div>
-          <div style="font-size:11px; color:var(--text-secondary); margin-bottom:6px;">🕒 ${f.hours}</div>
-          <a href="https://www.google.com/maps/search/?api=1&query=${mLat},${mLng}" target="_blank" rel="noopener" style="color:var(--green-soft); font-weight:700; text-decoration:underline;">Get GPS Directions →</a>
+        <div class="custom-map-popup">
+          <div class="popup-head">
+            <span class="popup-cat-badge" style="color:${themeCfg.color}; border-color:${themeCfg.color};">
+              ${themeCfg.label}
+            </span>
+            <span class="popup-pts">⭐ +${f.pts} PTS</span>
+          </div>
+          <div class="popup-title">${f.name}</div>
+          <div class="popup-addr">📍 ${f.addr}</div>
+          <div class="popup-hours">🕒 ${f.hours}</div>
+          <div class="popup-footer">
+            <span class="badge-verified" style="font-size:9.5px;">${f.verified ? '✓ Certified Facility' : 'ℹ️ Community Kiosk'}</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=${mLat},${mLng}" target="_blank" rel="noopener" class="popup-dir-btn">
+              Directions →
+            </a>
+          </div>
         </div>
       `;
       marker.bindPopup(popupHtml);
@@ -2248,7 +2403,7 @@ function plotFacilitiesOnMap() {
           </div>
           <div class="f-cat">
             <span>${f.addr}</span>
-            ${f.verified ? '<span class="badge-verified">Verified</span>' : '<span class="badge-demo">Demo</span>'}
+            ${f.verified ? '<span class="badge-verified">Verified</span>' : '<span class="badge-demo">Community</span>'}
           </div>
         `;
         listContainer.appendChild(item);
@@ -2258,6 +2413,12 @@ function plotFacilitiesOnMap() {
 
   const countBadge = document.getElementById('facilityCount');
   if (countBadge) countBadge.textContent = visibleCount;
+
+  // Update floating HUD telemetry
+  const hudCount = document.getElementById('hudFacilityCount');
+  if (hudCount) hudCount.textContent = `${visibleCount} Certified Hubs`;
+  const hudRange = document.getElementById('hudActiveRange');
+  if (hudRange) hudRange.textContent = `${currentRadiusKm} km Active Zone`;
 }
 
 function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -2481,6 +2642,7 @@ function renderMissions(filterPeriod = 'all') {
   }).join('');
 
   renderMilestoneRewards();
+  renderMissionCertificates();
 }
 
 function filterMissions(period) {
@@ -2572,6 +2734,174 @@ function claimRewardMilestone(id) {
 
   renderMilestoneRewards();
   showToast(`Voucher Unlocked! Code: ${milestone.code}`);
+}
+
+/* ===================================================================
+   CITIZEN SUSTAINABILITY HONORS & CERTIFICATES (LONG-TERM CONTRIBUTORS)
+=================================================================== */
+const LONG_TERM_CERTIFICATES = [
+  {
+    id: 'cert_life_sustained',
+    title: 'Mission LiFE Active Contributor Commendation',
+    auth: 'Ministry of Environment, Forest & Climate Change (MoEFCC)',
+    icon: '🌱',
+    desc: 'Conferred upon citizens who maintain an active commitment to daily climate directives, waste reduction, and sustainable lifestyle practices.',
+    reqText: 'Requires 7+ day active streak OR 250+ Green Points',
+    minStreak: 7,
+    minPoints: 250,
+    conferralTitle: 'Mission LiFE Sustained Contributor',
+    idCode: 'AEGIS-LIFE-2026-IN-4921',
+    tierLabel: 'Verified Contributor'
+  },
+  {
+    id: 'cert_clean_air_steward',
+    title: 'Urban Clean Air & Circular Steward Accreditation',
+    auth: 'National Clean Air Programme & Swachh Bharat Mission',
+    icon: '🏆',
+    desc: 'Prestigious accreditation awarded exclusively to veteran citizens with sustained long-term contributions across waste segregation, e-waste, and carbon avoidance.',
+    reqText: 'Requires 14+ day continuous streak AND 500+ Green Points',
+    minStreak: 14,
+    minPoints: 500,
+    conferralTitle: 'Urban Clean Air & Circular Steward',
+    idCode: 'AEGIS-NCAP-2026-IN-8842',
+    tierLabel: 'Veteran Steward'
+  },
+  {
+    id: 'cert_lifetime_patron',
+    title: 'Presidential Swachh-City Lifetime Climate Patron',
+    auth: 'Aegis National Climate Council & Urban Governance Secretariat',
+    icon: '👑',
+    desc: 'The highest civilian municipal sustainability honor, reserved for citizens demonstrating prolonged multi-month devotion to urban environmental restoration.',
+    reqText: 'Requires 30+ day sustained streak OR 1,000+ Lifetime Points',
+    minStreak: 30,
+    minPoints: 1000,
+    conferralTitle: 'Presidential Swachh-City Lifetime Patron',
+    idCode: 'AEGIS-SBM-2026-IN-9904',
+    tierLabel: 'Lifetime Climate Patron'
+  }
+];
+
+function renderMissionCertificates() {
+  const container = document.getElementById('missionCertsGrid');
+  if (!container) return;
+
+  const profile = AegisDB.getProfile() || {};
+  const currentPts = profile.totalPoints || 380;
+  const currentStreak = profile.streakDays || 14;
+
+  container.innerHTML = LONG_TERM_CERTIFICATES.map(c => {
+    let unlocked = false;
+    let progressPct = 0;
+    let progressLabel = '';
+
+    if (c.id === 'cert_life_sustained') {
+      unlocked = currentStreak >= c.minStreak || currentPts >= c.minPoints;
+      progressPct = unlocked ? 100 : Math.round((Math.max(currentStreak / c.minStreak, currentPts / c.minPoints)) * 100);
+      progressLabel = `Streak: ${currentStreak}/${c.minStreak}d · Pts: ${currentPts}/${c.minPoints}`;
+    } else if (c.id === 'cert_clean_air_steward') {
+      unlocked = currentStreak >= c.minStreak && currentPts >= c.minPoints;
+      const streakPct = Math.min(1, currentStreak / c.minStreak);
+      const ptsPct = Math.min(1, currentPts / c.minPoints);
+      progressPct = Math.round(((streakPct + ptsPct) / 2) * 100);
+      progressLabel = `Streak: ${currentStreak}/${c.minStreak}d · Pts: ${currentPts}/${c.minPoints}`;
+    } else if (c.id === 'cert_lifetime_patron') {
+      unlocked = currentStreak >= c.minStreak || currentPts >= c.minPoints;
+      progressPct = Math.round((Math.max(currentStreak / c.minStreak, currentPts / c.minPoints)) * 100);
+      progressLabel = `Streak: ${currentStreak}/${c.minStreak}d · Pts: ${currentPts}/${c.minPoints}`;
+    }
+
+    return `
+      <div class="cert-card ${unlocked ? 'unlocked' : 'locked'}">
+        <div>
+          <div class="cert-badge-status">
+            ${unlocked ? '<span>✓</span> ACCREDITATION UNLOCKED' : '<span>🔒</span> LONG-TERM ONLY'}
+          </div>
+          <div class="cert-card-icon">${c.icon}</div>
+          <div class="cert-card-title">${c.title}</div>
+          <div class="cert-card-desc">${c.desc}</div>
+        </div>
+
+        <div>
+          <div class="cert-card-auth">
+            <span>🏛️</span> <span>${c.auth}</span>
+          </div>
+
+          <div class="cert-req-box">
+            <span class="cert-req-lbl">${unlocked ? 'QUALIFICATION VERIFIED' : 'REQUIREMENT CRITERIA'}</span>
+            <div style="font-size:11px; color:var(--text-secondary);">${c.reqText}</div>
+            <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted); margin-top:6px;">
+              <span>Contributor Progress</span>
+              <span class="mono">${progressLabel}</span>
+            </div>
+            <div class="cert-req-bar">
+              <div class="cert-req-fill" style="width:${progressPct}%;"></div>
+            </div>
+          </div>
+
+          <button class="cta sm cert-action-btn ${unlocked ? '' : 'ghost'}" onclick="viewCertificate('${c.id}')">
+            ${unlocked ? '<span>📜</span> View &amp; Download Certificate' : '<span>🔒</span> View Accreditation Criteria'}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function viewCertificate(id) {
+  const c = LONG_TERM_CERTIFICATES.find(item => item.id === id);
+  if (!c) return;
+
+  const profile = AegisDB.getProfile() || {};
+  const currentPts = profile.totalPoints || 380;
+  const currentStreak = profile.streakDays || 14;
+
+  let unlocked = false;
+  if (c.id === 'cert_life_sustained') {
+    unlocked = currentStreak >= c.minStreak || currentPts >= c.minPoints;
+  } else if (c.id === 'cert_clean_air_steward') {
+    unlocked = currentStreak >= c.minStreak && currentPts >= c.minPoints;
+  } else if (c.id === 'cert_lifetime_patron') {
+    unlocked = currentStreak >= c.minStreak || currentPts >= c.minPoints;
+  }
+
+  const certCitizen = document.getElementById('certCitizenName');
+  const certHonor = document.getElementById('certHonorTitle');
+  const certReg = document.getElementById('certRegId');
+  const certTier = document.getElementById('certAccredTier');
+  const certBody = document.getElementById('certBodyText');
+  const certDate = document.getElementById('certConferDate');
+
+  const todayStr = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
+
+  if (certCitizen) certCitizen.textContent = (profile.name || 'Citizen').toUpperCase();
+  if (certHonor) certHonor.textContent = c.conferralTitle;
+  if (certReg) certReg.textContent = c.idCode;
+  if (certDate) certDate.textContent = todayStr;
+  if (certTier) certTier.textContent = unlocked ? `✓ ${c.tierLabel}` : `🔒 Pending Contributor Qualification`;
+
+  if (certBody) {
+    if (unlocked) {
+      certBody.innerHTML = `in solemn recognition of sustained, long-term dedication to urban sustainability, continuous carbon footprint reduction, and faithful adherence to India's <strong>Mission LiFE</strong> lifestyle directives.`;
+    } else {
+      certBody.innerHTML = `This honor is reserved for verified long-term contributors. Continue logging daily eco-actions, segregation directives, and recycling drops to attain full official conferral.`;
+    }
+  }
+
+  const modal = document.getElementById('certificateModal');
+  if (modal) modal.classList.remove('hide');
+  showToast(unlocked ? `Opening certificate: ${c.conferralTitle}` : `Reviewing criteria for: ${c.conferralTitle}`);
+}
+
+function closeCertificateModal() {
+  const modal = document.getElementById('certificateModal');
+  if (modal) modal.classList.add('hide');
+}
+
+function printCertificateDocument() {
+  showToast('Opening print dialog for certificate PDF…');
+  setTimeout(() => {
+    window.print();
+  }, 300);
 }
 
 /* ===================================================================
@@ -2755,8 +3085,12 @@ function renderQuizCard() {
   if (feedback) feedback.textContent = 'Select an answer';
 
   if (optsWrap) {
+    const optLetters = ['A', 'B', 'C', 'D'];
     optsWrap.innerHTML = item.options.map((opt, i) => `
-      <button class="quiz-btn" onclick="checkQuizAnswer(${i})">${opt}</button>
+      <button class="quiz-btn" onclick="checkQuizAnswer(${i})" style="display:flex; align-items:center;">
+        <span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:4px; background:rgba(61,220,132,0.15); color:var(--green); font-weight:700; font-size:11px; margin-right:10px; flex-shrink:0;">${optLetters[i] || (i+1)}</span>
+        <span>${opt}</span>
+      </button>
     `).join('');
   }
 }
